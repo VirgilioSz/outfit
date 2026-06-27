@@ -1,0 +1,28 @@
+# ── Servidor web ──────────────────────────────────────────────
+fastapi==0.111.0          # framework principal de la API
+uvicorn[standard]==0.29.0 # servidor ASGI para correr FastAPI
+
+# ── Base de datos ──────────────────────────────────────────────
+sqlalchemy==2.0.30        # ORM para interactuar con la base de datos
+alembic==1.13.1           # migraciones de base de datos (cuando cambies modelos)
+# SQLite no necesita driver externo — viene incluido en Python
+
+# ── Autenticación ──────────────────────────────────────────────
+python-jose[cryptography]==3.3.0  # crear y validar tokens JWT
+passlib[bcrypt]==1.7.4            # hashear contraseñas
+
+# ── Subida de archivos ─────────────────────────────────────────
+python-multipart==0.0.9   # necesario para recibir imágenes en FastAPI
+
+# ── Inteligencia artificial ────────────────────────────────────
+torch==2.3.0              # base de CLIP (puede tardar en descargar, es grande)
+transformers==4.41.0      # carga el modelo CLIP de Hugging Face
+Pillow==10.3.0            # manipulación de imágenes (abrir, redimensionar, convertir)
+rembg==2.0.57             # eliminar fondo de fotos de ropa (open source, gratis)
+
+# ── LLM para generar outfits ───────────────────────────────────
+google-generativeai==0.7.2  # SDK de Gemini (tier gratuito)
+
+# ── Utilidades ─────────────────────────────────────────────────
+python-dotenv==1.0.1      # leer variables del archivo .env
+numpy==1.26.4             # operaciones numéricas (usado por CLIP internamente)
