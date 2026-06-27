@@ -1,0 +1,26 @@
+# Secretos
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Fotos de ropa subidas
+uploads/
+
+# Modelos de IA descargados
+*.pt
+*.bin
+*.safetensors
+models/
+
+# Base de datos local (SQLite)
+*.db
+*.sqlite3
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
