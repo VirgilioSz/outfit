@@ -15,7 +15,6 @@ uploads/
 *.pt
 *.bin
 *.safetensors
-models/
 
 # Base de datos local (SQLite)
 *.db
@@ -24,3 +23,6 @@ models/
 # Sistema operativo
 .DS_Store
 Thumbs.db
+
+# Ruta del interpretador de Python
+.vscode/
