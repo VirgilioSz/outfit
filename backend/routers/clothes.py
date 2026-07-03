@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from sqlalchemy.orm import Session
 from database import get_db
 from models.clothing import Clothing
-import os, shutil, uuid
+from services.image_service import guardar_imagen, eliminar_imagen
 
 router = APIRouter()
 
@@ -17,27 +17,13 @@ async def crear_prenda(
     notas: str = Form(default=None),
     db: Session = Depends(get_db)
 ):
-    # 1. Verifica que la extensión de la imagen sea válida
-    extension = imagen.filename.split(".")[-1].lower()
-
-    if extension not in ["jpg", "jpeg", "png", "webp"]:
-        raise HTTPException(
-            status_code=400,
-            detail="Formato de imagen no válido. Solo se permiten JPG, JPEG, PNG y WEBP."
-        )
-
-    # 2. Genera un nombre único para el archivo con uuid
-    nombre_archivo = f"{uuid.uuid4()}.{extension}"
-
-    # 3. Guarda la imagen en la carpeta uploads/
-    os.makedirs("uploads", exist_ok=True)
-    ruta_completa = os.path.join("uploads", nombre_archivo)
-    with open(ruta_completa, "wb") as f:
-        shutil.copyfileobj(imagen.file, f)
-
-    # 4. Crea el objeto Clothing con los datos y la ruta de la imagen
+    try:
+        imagen_url = guardar_imagen(imagen)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    
     prenda = Clothing(
-        imagen_url=ruta_completa,
+        imagen_url=imagen_url,
         tipo=tipo,
         color=color,
         estilo=estilo,
@@ -45,12 +31,10 @@ async def crear_prenda(
         notas=notas
     )
     
-    # 5. db.add(), db.commit(), db.refresh()
     db.add(prenda)
     db.commit()
     db.refresh(prenda)
     
-    # 6. Retorna la prenda creada
     return prenda
 
 # ── GET / — listar todas las prendas ──────────────────────────
@@ -73,7 +57,7 @@ def eliminar_prenda(prenda_id: int, db: Session = Depends(get_db)):
     prenda = db.query(Clothing).filter(Clothing.id == prenda_id).first()
     if not prenda:
         raise HTTPException(status_code=404, detail="Prenda no encontrada")
-    os.remove(prenda.imagen_url)
+    eliminar_imagen(prenda.imagen_url)
     db.delete(prenda)
     db.commit()
     return {"message": "Prenda eliminada"}
