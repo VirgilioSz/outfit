@@ -9,9 +9,9 @@ router = APIRouter()
 @router.post("/")
 async def crear_prenda_endpoint(
     imagen: UploadFile = File(...),
-    tipo: str = Form(...),
-    color: str = Form(...),
-    estilo: str = Form(...),
+    tipo: str = Form(default=None),
+    color: str = Form(default=None),
+    estilo: str = Form(default=None),
     temporada: str = Form(default="todas"),
     notas: str = Form(default=None),
     db: Session = Depends(get_db)
