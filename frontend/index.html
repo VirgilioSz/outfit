@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Closet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css" />
+    <!-- closet.css si lo necesitas -->
+</head>
+
+<body>
+    <!-- Navbar con links a: Closet, Subir prenda, Generar outfit, Historial -->
+    <nav>
+        <ul class="nav-links">
+            <li><a href="index.html">Closet</a></li>
+            <li><a href="upload.html">Subir prenda</a></li>
+            <li><a href="generate.html">Generar outfit</a></li>
+            <li><a href="history.html">Historial</a></li>
+        </ul>
+    </nav>
+
+    <div class="contenedor">
+        <h1>Mi Closet</h1>
+
+        <!-- Grilla de prendas — se llena dinámicamente con JS -->
+        <div class="grid-prendas" id="grid-prendas">
+            <!-- closet.js inyecta las cards aquí -->
+        </div>
+
+        <!-- Mensaje cuando no hay prendas -->
+        <p id="mensaje-vacio" style="display:none">
+            No tienes prendas todavía.
+        </p>
+    </div>
+
+    <!-- api.js primero, luego closet.js -->
+    <script src="js/api.js"></script>
+    <script src="js/closet.js"></script>
+</body>
+
+</html>

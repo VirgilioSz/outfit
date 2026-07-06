@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from database import create_tables
 from config import CORS_ORIGINS, validate_config
 from routers import clothes, outfits
+from fastapi.staticfiles import StaticFiles
 
 # 1. Crea la instancia de FastAPI
 app = FastAPI(title="Outfit", version="1.0")
@@ -28,3 +29,5 @@ async def health_status():
 # 5. Aquí irán los routers cuando los crees, así:
 app.include_router(clothes.router, prefix="/clothes", tags=["clothes"])
 app.include_router(outfits.router, prefix="/outfits", tags=["outfits"])
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
