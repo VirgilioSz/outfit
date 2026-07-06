@@ -111,3 +111,36 @@ nav a:hover {
     color: var(--color-error);
     font-size: 0.875rem;
 }
+
+/* ── Formulario ──── */
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: var(--espaciado-md);
+}
+
+.campo label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-texto);
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    padding: var(--espaciado-sm) var(--espaciado-md);
+    border: 1px solid #D4D4D8;
+    border-radius: var(--radio-borde);
+    font-family: var(--fuente-principal);
+    font-size: var(--tamaño-base);
+    background: white;
+    color: var(--color-texto);
+    outline: none;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    border-color: var(--color-primario);
+}
