@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Closet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+    <!-- Navbar con links a: Closet, Subir prenda, Generar outfit, Historial -->
+    <nav>
+        <ul class="nav-links">
+            <li><a href="index.html">Closet</a></li>
+            <li><a href="upload.html">Subir prenda</a></li>
+            <li><a href="generate.html">Generar outfit</a></li>
+            <li><a href="history.html">Historial</a></li>
+        </ul>
+    </nav>
+
+    <div class="contenedor">
+        <h1>Generar Outfit</h1>
+
+        <!-- Selector de ocasión -->
+        <div class="campo">
+            <label>¿Para qué ocasión?</label>
+            <select id="selector-ocasion" class="campo-select">
+                <option value="trabajo">Trabajo</option>
+                <option value="casual">Casual</option>
+                <option value="cita">Cita</option>
+                <option value="deporte">Deporte</option>
+                <option value="evento-formal">Evento Formal</option>
+            </select>
+        </div>
+
+        <button id="btn-generar" class="btn-primario">Generar outfit</button>
+
+        <!-- Estado de carga -->
+        <p id="mensaje-cargando" style="display:none">Generando outfit...</p>
+
+        <!-- Resultado -->
+        <div id="resultado-outfit" style="display:none">
+            <p id="descripcion-outfit"></p>
+            <div class="grid-prendas" id="grid-outfit"></div>
+        </div>
+
+        <p id="mensaje-error" class="texto-error" style="display:none"></p>
+    </div>
+
+    <!-- api.js primero, luego generate.js -->
+    <script src="js/api.js"></script>
+    <script src="js/generate.js"></script>
+</body>
+
+</html>

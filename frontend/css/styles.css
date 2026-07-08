@@ -1,0 +1,146 @@
+/* ── Variables globales ────────────────────────────────────── */
+:root {
+    /* Colores — elige los que quieras */
+    --color-primario: #3F3F46;
+    --color-secundario: #6c757d;
+    --color-fondo: #F4F4F5;
+    --color-texto: #18181B;
+    --color-error: #dc3545;
+
+    /* Tipografía */
+    --fuente-principal: "Inter", sans-serif;
+    --tamaño-base: 16px;
+
+    /* Espaciado */
+    --espaciado-sm: 8px;
+    --espaciado-md: 16px;
+    --espaciado-lg: 32px;
+
+    /* Bordes */
+    --radio-borde: 8px;
+}
+
+/* ── Reset básico ──── */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ── Body ──── */
+body {
+    font-family: var(--fuente-principal);
+    background: var(--color-fondo);
+    color: var(--color-texto);
+    font-size: var(--tamaño-base);
+    line-height: 1.7;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── Navbar ──── */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    transition: background 0.4s;
+}
+
+nav a {
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-primario);
+    transition: color 0.25s;
+}
+
+nav a:hover {
+    color: var(--color-secundario);
+}
+
+.btn-primario {
+    background-color: var(--color-primario);
+    color: white;
+    padding: var(--espaciado-sm) var(--espaciado-md);
+    border-radius: var(--radio-borde);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-peligro {
+    background-color: var(--color-error);
+    color: white;
+    padding: var(--espaciado-sm) var(--espaciado-md);
+    border-radius: var(--radio-borde);
+    border: none;
+    cursor: pointer;
+}
+
+/* ── Cards ──── */
+.card {
+    background-color: white;
+    border-radius: var(--radio-borde);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    padding: var(--espaciado-md);
+}
+
+/* ── Utilidades ──── */
+.contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--espaciado-md);
+    padding-top: 64px;
+}
+
+.grid-prendas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--espaciado-md);
+}
+
+.texto-error {
+    color: var(--color-error);
+    font-size: 0.875rem;
+}
+
+/* ── Formulario ──── */
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: var(--espaciado-md);
+}
+
+.campo label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-texto);
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    padding: var(--espaciado-sm) var(--espaciado-md);
+    border: 1px solid #D4D4D8;
+    border-radius: var(--radio-borde);
+    font-family: var(--fuente-principal);
+    font-size: var(--tamaño-base);
+    background: white;
+    color: var(--color-texto);
+    outline: none;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    border-color: var(--color-primario);
+}

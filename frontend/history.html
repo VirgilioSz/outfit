@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Prenda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="index.html">Closet</a></li>
+            <li><a href="upload.html">Subir prenda</a></li>
+            <li><a href="generate.html">Generar outfit</a></li>
+            <li><a href="history.html">Historial</a></li>
+        </ul>
+    </nav>
+
+    <div class="contenedor">
+    <h1>Historial de Outfits</h1>
+
+    <!-- Lista de outfits — se llena con JS -->
+    <div id="lista-historial"></div>
+
+    <!-- Mensaje cuando no hay historial -->
+    <p id="mensaje-vacio" style="display:none">
+        No has generado ningún outfit todavía.
+    </p>
+
+    <p id="mensaje-error" class="texto-error" style="display:none"></p>
+</div>
+
+    <script src="js/api.js"></script>
+    <script src="js/history.js"></script>
+</body>
+
+</html>

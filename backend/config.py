@@ -17,7 +17,7 @@ ACCESS_TOKEN_EXPIRE_HOURS = int(os.getenv("ACCESS_TOKEN_EXPIRE_HOURS", "168"))
 
 # ── Gemini (generación de outfits) ────────────────────────────────────────────
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-GEMINI_MODEL = "gemini-1.5-flash"  # modelo gratuito con límite generoso
+GEMINI_MODEL = "gemini-3.5-flash"  # modelo gratuito con límite generoso
 
 
 # ── Almacenamiento de imágenes ────────────────────────────────────────────────

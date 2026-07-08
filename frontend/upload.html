@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Prenda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="index.html">Closet</a></li>
+            <li><a href="upload.html">Subir prenda</a></li>
+            <li><a href="generate.html">Generar outfit</a></li>
+            <li><a href="history.html">Historial</a></li>
+        </ul>
+    </nav>
+
+    <div class="contenedor">
+        <h1>Subir Prenda</h1>
+        <p style="color: var(--color-secundario); margin-bottom: var(--espaciado-lg);">
+            Los campos de tipo, color y estilo son opcionales — CLIP los detecta automáticamente.
+        </p>
+
+        <form id="form-upload">
+
+            <!-- Imagen -->
+            <div class="campo">
+                <label for="input-imagen">Foto de la prenda</label>
+                <input type="file" id="input-imagen" accept=".jpg,.jpeg,.png,.webp" required>
+                <img id="preview" style="display:none; margin-top: var(--espaciado-sm);
+                     max-width: 200px; border-radius: var(--radio-borde);" alt="Preview">
+            </div>
+
+            <!-- Tipo -->
+            <div class="campo">
+                <label for="input-tipo">Tipo <span style="color: var(--color-secundario)">(opcional)</span></label>
+                <input type="text" id="input-tipo" placeholder="ej. camiseta, pantalon, zapatos...">
+            </div>
+
+            <!-- Color -->
+            <div class="campo">
+                <label for="input-color">Color <span style="color: var(--color-secundario)">(opcional)</span></label>
+                <input type="text" id="input-color" placeholder="ej. negro, azul, beige...">
+            </div>
+
+            <!-- Estilo -->
+            <div class="campo">
+                <label for="input-estilo">Estilo <span style="color: var(--color-secundario)">(opcional)</span></label>
+                <input type="text" id="input-estilo" placeholder="ej. casual, formal, deportivo...">
+            </div>
+
+            <!-- Temporada -->
+            <div class="campo">
+                <label for="input-temporada">Temporada</label>
+                <select id="input-temporada">
+                    <option value="todas">Todas</option>
+                    <option value="primavera">Primavera</option>
+                    <option value="verano">Verano</option>
+                    <option value="otoño">Otoño</option>
+                    <option value="invierno">Invierno</option>
+                </select>
+            </div>
+
+            <!-- Notas -->
+            <div class="campo">
+                <label for="input-notas">Notas <span style="color: var(--color-secundario)">(opcional)</span></label>
+                <textarea id="input-notas" rows="3" placeholder="ej. la que uso para entrevistas..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-primario">Subir prenda</button>
+
+        </form>
+
+        <p id="mensaje-error" class="texto-error" style="display:none; margin-top: var(--espaciado-md);"></p>
+        <p id="mensaje-exito" style="display:none; margin-top: var(--espaciado-md);">✅ Prenda subida correctamente</p>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/upload.js"></script>
+</body>
+
+</html>
