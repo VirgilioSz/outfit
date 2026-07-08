@@ -30,4 +30,4 @@ async def health_status():
 app.include_router(clothes.router, prefix="/clothes", tags=["clothes"])
 app.include_router(outfits.router, prefix="/outfits", tags=["outfits"])
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
