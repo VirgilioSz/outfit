@@ -53,6 +53,17 @@ nav {
     transition: background 0.4s;
 }
 
+nav {
+    background: white;
+    border-bottom: 1px solid #E4E4E7;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: var(--espaciado-lg);
+}
+
 nav a {
     text-decoration: none;
     font-size: 0.75rem;
@@ -87,10 +98,36 @@ nav a:hover {
 
 /* ── Cards ──── */
 .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaciado-sm);
     background-color: white;
     border-radius: var(--radio-borde);
     box-shadow: 0 1px 3px rgba(0,0,0,0.08);
     padding: var(--espaciado-md);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: var(--radio-borde);
+    background: #F4F4F5;
+}
+
+.card p {
+    font-size: 0.875rem;
+}
+
+.card button {
+    margin-top: auto;
 }
 
 /* ── Utilidades ──── */
@@ -143,4 +180,11 @@ nav a:hover {
 .campo select:focus,
 .campo textarea:focus {
     border-color: var(--color-primario);
+}
+
+/* ── Títulos ──── */
+h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: var(--espaciado-lg);
 }
