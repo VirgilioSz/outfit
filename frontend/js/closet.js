@@ -29,8 +29,10 @@ function crearCard(prenda) {
     div.className = "card";
     div.innerHTML = `
         <img src="${API_URL}/${prenda.imagen_url}" alt="${prenda.tipo}">
-        <p>${prenda.tipo} — ${prenda.color}</p>
-        <button onclick="eliminarPrenda(${prenda.id})">Eliminar</button>
+        <div class="card-info">
+            <p class="card-tipo">${prenda.tipo}</p>
+        </div>
+        <button class="btn-peligro" onclick="eliminarPrenda(${prenda.id})">Eliminar</button>
     `;
     return div;
 }
