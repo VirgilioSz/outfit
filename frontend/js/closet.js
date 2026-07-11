@@ -32,7 +32,9 @@ function crearCard(prenda) {
         <div class="card-info">
             <p class="card-tipo">${prenda.tipo}</p>
         </div>
-        <button class="btn-peligro" onclick="eliminarPrenda(${prenda.id})">Eliminar</button>
+        <button class="btn-peligro" onclick="eliminarPrenda(${prenda.id})">
+            <span>Eliminar</span>
+        </button>
     `;
     return div;
 }
