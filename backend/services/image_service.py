@@ -42,6 +42,15 @@ def guardar_imagen(imagen: UploadFile) -> str:
     return f"/uploads/{nombre_archivo}"
     
 
+def guardar_imagen_sin_fondo(imagen_bytes: bytes, imagen_url: str) -> str:
+    ruta_original = obtener_ruta_imagen(imagen_url)
+    ruta_sin_fondo = ruta_original.with_suffix(".png")
+    ruta_sin_fondo.write_bytes(imagen_bytes)
+    if ruta_original != ruta_sin_fondo:
+        ruta_original.unlink(missing_ok=True)
+    return f"/uploads/{ruta_sin_fondo.name}"
+
+
 def eliminar_imagen(imagen_url: str) -> None:
     ruta = obtener_ruta_imagen(imagen_url)
     ruta.unlink(missing_ok=True)
