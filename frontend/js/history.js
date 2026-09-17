@@ -5,11 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
 async function cargarHistorial() {
     try {
         const historial = await getHistorial();
-        if (historial.length === 0) {
-            document.getElementById("mensaje-vacio").style.display = "block";
-        } else {
-            renderHistorial(historial);
-        }
+        renderHistorial(historial);
+        document.getElementById("mensaje-vacio").style.display = historial.length === 0 ? "block" : "none";
     } catch (error) {
         console.error("Error al cargar el historial:", error);
     }

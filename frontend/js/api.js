@@ -1,6 +1,11 @@
 // URL base del backend
 const API_URL = "http://localhost:8000";
 
+function obtenerUrlImagen(ruta) {
+    const nombreArchivo = ruta.replace(/\\/g, "/").split("/").pop();
+    return `${API_URL}/uploads/${encodeURIComponent(nombreArchivo)}`;
+}
+
 // ── Función central de fetch ───────────────────────────────────
 async function apiRequest(endpoint, options = {}) {
     const ruta_completa = `${API_URL}${endpoint}`;

@@ -5,11 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
 async function cargarPrendas() {
     try {
         const prendas = await getPrendas();
-        if (prendas.length === 0) {
-            document.getElementById("mensaje-vacio").style.display = "block";
-        } else {
-            renderPrendas(prendas);
-        }
+        renderPrendas(prendas);
+        document.getElementById("mensaje-vacio").style.display = prendas.length === 0 ? "block" : "none";
     } catch (error) {
         console.error("Error al cargar las prendas:", error);
     }
@@ -28,7 +25,7 @@ function crearCard(prenda) {
     const div = document.createElement("div");
     div.className = "card";
     div.innerHTML = `
-        <img src="${API_URL}/${prenda.imagen_url}" alt="${prenda.tipo}">
+        <img src="${obtenerUrlImagen(prenda.imagen_url)}" alt="${prenda.tipo}">
         <div class="card-info">
             <p class="card-tipo">${prenda.tipo}</p>
         </div>
