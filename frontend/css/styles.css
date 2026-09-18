@@ -462,6 +462,73 @@ h1 {
     gap: var(--espaciado-sm);
 }
 
+/* ── Lightbox Outfit específico ──────────────────────────────── */
+.lightbox-outfit-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: var(--espaciado-md);
+    border-bottom: 1px solid var(--color-borde);
+    margin-bottom: var(--espaciado-md);
+}
+
+.lightbox-outfit-ocasion {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-acento);
+    text-transform: capitalize;
+    margin: 0;
+}
+
+.lightbox-outfit-fecha {
+    font-size: 0.8rem;
+    color: var(--color-texto-muted);
+    margin: 0;
+}
+
+.lightbox-outfit-descripcion {
+    font-size: 0.9375rem;
+    color: var(--color-texto);
+    line-height: 1.6;
+    margin-bottom: var(--espaciado-lg);
+    padding: var(--espaciado-md);
+    background: var(--color-fondo);
+    border-radius: calc(var(--radio-borde) - 4px);
+    border: 1px solid var(--color-borde);
+}
+
+#lightbox-outfit-prendas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--espaciado-sm);
+}
+
+#lightbox-outfit-prendas .card {
+    cursor: default;
+}
+
+#lightbox-outfit-prendas .card:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--color-borde);
+}
+
+#lightbox-outfit-prendas .card img {
+    height: 160px;
+}
+
+#lightbox-outfit-prendas .card-info {
+    padding: var(--espaciado-sm);
+}
+
+#lightbox-outfit-prendas .card-tipo {
+    font-size: 0.8rem;
+}
+
+#lightbox-outfit-prendas .card-detalle {
+    font-size: 0.7rem;
+}
+
 /* ── Animaciones base ────────────────────────────────────────── */
 @keyframes fadeIn {
     from { opacity: 0; }

@@ -36,6 +36,33 @@
 <p id="mensaje-error" class="texto-error" style="display:none"></p>
 </div>
 
+<!-- Lightbox para detalle de outfit -->
+<div class="lightbox-overlay" id="lightbox-outfit" role="dialog" aria-modal="true" aria-labelledby="lightbox-outfit-titulo">
+    <div class="lightbox-panel">
+        <header class="lightbox-header">
+            <h2 id="lightbox-outfit-titulo">Detalle de outfit</h2>
+            <button class="lightbox-close" id="lightbox-outfit-cerrar" aria-label="Cerrar detalle">
+                <i data-lucide="x"></i>
+            </button>
+        </header>
+        <div class="lightbox-body">
+            <div class="lightbox-outfit-meta">
+                <p class="lightbox-outfit-ocasion" id="lightbox-outfit-ocasion"></p>
+                <p class="lightbox-outfit-fecha" id="lightbox-outfit-fecha"></p>
+            </div>
+            <p class="lightbox-outfit-descripcion" id="lightbox-outfit-descripcion"></p>
+            <div class="grid-prendas stagger-children" id="lightbox-outfit-prendas" style="margin-top: var(--espaciado-lg);">
+                <!-- Prendas del outfit -->
+            </div>
+        </div>
+        <footer class="lightbox-footer">
+            <button class="btn-peligro" id="lightbox-outfit-eliminar">
+                <i data-lucide="trash-2"></i> Eliminar outfit
+            </button>
+        </footer>
+    </div>
+</div>
+
 <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
 
 <script src="js/api.js"></script>
