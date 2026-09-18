@@ -16,17 +16,18 @@ botonGenerar.addEventListener("click", async () => {
         document.getElementById("descripcion-outfit").textContent = outfit.descripcion;
         const grid = document.getElementById("grid-outfit");
         grid.innerHTML = "";
-        outfit.prendas.forEach((prenda, index) => {
+        outfit.prendas.forEach((prenda) => {
             const card = crearCardOutfit(prenda);
-            card.style.animationDelay = `${index * 80}ms`;
             grid.appendChild(card);
         });
         document.getElementById("resultado-outfit").style.display = "block";
-        mostrarToast("Outfit generado correctamente", "exito");
+        // Stagger animation using UI helper
+        UI.staggerEntrada("#grid-outfit", ".card", { delayBase: 80 });
+        UI.mostrarToast("Outfit generado correctamente", "exito");
     } catch (error) {
         document.getElementById("mensaje-error").style.display = "block";
         document.getElementById("mensaje-error").textContent = error.message;
-        mostrarToast(error.message, "error");
+        UI.mostrarToast(error.message, "error");
     } finally {
         generando = false;
         botonGenerar.disabled = false;
@@ -40,46 +41,9 @@ function crearCardOutfit(prenda) {
     div.innerHTML = `
         <img src="${obtenerUrlImagen(prenda.imagen_url)}" alt="${prenda.tipo}">
         <div class="card-info">
-            <p class="card-tipo">${capitalizar(prenda.tipo)}</p>
-            <p class="card-detalle">${capitalizar(prenda.color)} \u2022 ${capitalizar(prenda.estilo)}</p>
+            <p class="card-tipo">${UI.capitalizar(prenda.tipo)}</p>
+            <p class="card-detalle">${UI.capitalizar(prenda.color)} \u2022 ${UI.capitalizar(prenda.estilo)}</p>
         </div>
     `;
     return div;
-}
-
-function capitalizar(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-// --- Toast notifications ---
-function mostrarToast(mensaje, tipo = "info") {
-    const container = document.getElementById("toast-container");
-    const toast = document.createElement("div");
-    toast.className = `toast toast-${tipo}`;
-    toast.role = "alert";
-    toast.ariaLive = "assertive";
-
-    const iconos = {
-        exito: "check-circle",
-        error: "alert-circle",
-        info: "info"
-    };
-
-    toast.innerHTML = `
-        <i data-lucide="${iconos[tipo]}" class="toast-icon"></i>
-        <span class="toast-mensaje">${mensaje}</span>
-    `;
-
-    container.appendChild(toast);
-    lucide.createIcons();
-
-    requestAnimationFrame(() => {
-        toast.classList.add("visible");
-    });
-
-    setTimeout(() => {
-        toast.classList.remove("visible");
-        toast.classList.add("exiting");
-        toast.addEventListener("transitionend", () => toast.remove());
-    }, 4000);
 }

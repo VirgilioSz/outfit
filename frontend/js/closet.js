@@ -8,21 +8,21 @@ async function cargarPrendas() {
         const prendas = await getPrendas();
         renderPrendas(prendas);
         document.getElementById("mensaje-vacio").style.display = prendas.length === 0 ? "block" : "none";
-        lucide.createIcons();
     } catch (error) {
         console.error("Error al cargar las prendas:", error);
-        mostrarToast("Error al cargar las prendas", "error");
+        UI.mostrarToast("Error al cargar las prendas", "error");
     }
 }
 
 function renderPrendas(prendas) {
     const grid = document.getElementById("grid-prendas");
     grid.innerHTML = "";
-    prendas.forEach((prenda, index) => {
+    prendas.forEach((prenda) => {
         const card = crearCard(prenda);
-        card.style.animationDelay = `${index * 80}ms`;
         grid.appendChild(card);
     });
+    // Stagger animation using UI helper
+    UI.staggerEntrada("#grid-prendas", ".card", { delayBase: 80 });
 }
 
 function crearCard(prenda) {
@@ -36,7 +36,7 @@ function crearCard(prenda) {
         <img src="${obtenerUrlImagen(prenda.imagen_url)}" alt="${prenda.tipo}">
         <div class="card-info">
             <p class="card-tipo">${prenda.tipo}</p>
-            <p class="card-detalle">${prenda.color} • ${prenda.estilo}</p>
+            <p class="card-detalle">${prenda.color} \u2022 ${prenda.estilo}</p>
         </div>
     `;
     div.addEventListener("click", () => abrirLightbox(prenda));
@@ -50,6 +50,7 @@ function crearCard(prenda) {
 }
 
 let prendaActual = null;
+let limpiarFocusTrap = null;
 
 function inicializarLightbox() {
     const overlay = document.getElementById("lightbox-prenda");
@@ -89,40 +90,41 @@ function abrirLightbox(prenda) {
     infoGrid.innerHTML = `
         <div class="lightbox-campo">
             <span class="lightbox-campo-label">Tipo</span>
-            <span class="lightbox-campo-valor">${capitalizar(prenda.tipo)}</span>
+            <span class="lightbox-campo-valor">${UI.capitalizar(prenda.tipo)}</span>
         </div>
         <div class="lightbox-campo">
             <span class="lightbox-campo-label">Color</span>
-            <span class="lightbox-campo-valor">${capitalizar(prenda.color)}</span>
+            <span class="lightbox-campo-valor">${UI.capitalizar(prenda.color)}</span>
         </div>
         <div class="lightbox-campo">
             <span class="lightbox-campo-label">Estilo</span>
-            <span class="lightbox-campo-valor">${capitalizar(prenda.estilo)}</span>
+            <span class="lightbox-campo-valor">${UI.capitalizar(prenda.estilo)}</span>
         </div>
         <div class="lightbox-campo">
             <span class="lightbox-campo-label">Temporada</span>
-            <span class="lightbox-campo-valor">${capitalizar(prenda.temporada)}</span>
+            <span class="lightbox-campo-valor">${UI.capitalizar(prenda.temporada)}</span>
         </div>
     `;
 
-    notas.textContent = prenda.notas || "—";
+    notas.textContent = prenda.notas || "\u2014";
 
-    overlay.classList.add("abierto");
-    document.body.style.overflow = "hidden";
-    cerrarBtn.focus();
+    // Usar UI helper para animación + focus trap
+    UI.abrirPanel("#lightbox-prenda", ".lightbox-panel", () => {
+        limpiarFocusTrap = UI.atraparFoco("#lightbox-prenda");
+        document.getElementById("lightbox-cerrar").focus();
+    });
 }
 
 function cerrarLightbox() {
     const overlay = document.getElementById("lightbox-prenda");
-    overlay.classList.remove("abierto");
-    document.body.style.overflow = "";
-    prendaActual = null;
-    // Restaurar vista de solo lectura si estaba en edición
-    restaurarVistaLectura();
-}
-
-function capitalizar(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    UI.cerrarPanel("#lightbox-prenda", ".lightbox-panel", () => {
+        prendaActual = null;
+        restaurarVistaLectura();
+        if (limpiarFocusTrap) {
+            limpiarFocusTrap();
+            limpiarFocusTrap = null;
+        }
+    });
 }
 
 // --- Edición dentro del lightbox ---
@@ -175,7 +177,6 @@ function activarEdicion() {
     eliminarBtn.classList.remove("btn-peligro");
     eliminarBtn.classList.add("btn-primario");
 
-    lucide.createIcons();
     document.getElementById("edit-tipo").focus();
 }
 
@@ -200,8 +201,6 @@ function restaurarVistaLectura() {
     eliminarBtn.onclick = confirmarEliminar;
     eliminarBtn.classList.remove("btn-primario");
     eliminarBtn.classList.add("btn-peligro");
-
-    lucide.createIcons();
 }
 
 async function guardarEdicion() {
@@ -214,7 +213,7 @@ async function guardarEdicion() {
     const notas = document.getElementById("edit-notas").value.trim();
 
     if (!tipo || !color || !estilo) {
-        mostrarToast("Tipo, color y estilo son obligatorios", "error");
+        UI.mostrarToast("Tipo, color y estilo son obligatorios", "error");
         return;
     }
 
@@ -224,12 +223,12 @@ async function guardarEdicion() {
         });
 
         prendaActual = prendaActualizada;
-        mostrarToast("Prenda actualizada correctamente", "exito");
+        UI.mostrarToast("Prenda actualizada correctamente", "exito");
         restaurarVistaLectura();
         await cargarPrendas();
     } catch (error) {
         console.error("Error al actualizar:", error);
-        mostrarToast(error.message || "Error al actualizar la prenda", "error");
+        UI.mostrarToast(error.message || "Error al actualizar la prenda", "error");
     }
 }
 
@@ -240,7 +239,7 @@ function cancelarEdicion() {
 // --- Eliminar ---
 function confirmarEliminar() {
     if (!prendaActual) return;
-    if (confirm("¿Eliminar esta prenda?")) {
+    if (confirm("\u00bfEliminar esta prenda?")) {
         eliminarPrendaActual();
     }
 }
@@ -250,45 +249,11 @@ async function eliminarPrendaActual() {
     const id = prendaActual.id;
     try {
         await deletePrenda(id);
-        mostrarToast("Prenda eliminada", "exito");
+        UI.mostrarToast("Prenda eliminada", "exito");
         cerrarLightbox();
         await cargarPrendas();
     } catch (error) {
         console.error("Error al eliminar:", error);
-        mostrarToast("Error al eliminar la prenda", "error");
+        UI.mostrarToast("Error al eliminar la prenda", "error");
     }
-}
-
-// --- Toast notifications ---
-function mostrarToast(mensaje, tipo = "info") {
-    const container = document.getElementById("toast-container");
-    const toast = document.createElement("div");
-    toast.className = `toast toast-${tipo}`;
-    toast.role = "alert";
-    toast.ariaLive = "assertive";
-
-    const iconos = {
-        exito: "check-circle",
-        error: "alert-circle",
-        info: "info"
-    };
-
-    toast.innerHTML = `
-        <i data-lucide="${iconos[tipo]}" class="toast-icon"></i>
-        <span class="toast-mensaje">${mensaje}</span>
-    `;
-
-    container.appendChild(toast);
-    lucide.createIcons();
-
-    // Forzar reflow para animación
-    requestAnimationFrame(() => {
-        toast.classList.add("visible");
-    });
-
-    setTimeout(() => {
-        toast.classList.remove("visible");
-        toast.classList.add("exiting");
-        toast.addEventListener("transitionend", () => toast.remove());
-    }, 4000);
 }

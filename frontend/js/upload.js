@@ -2,8 +2,6 @@ const formulario = document.getElementById("form-upload");
 const inputImagen = document.getElementById("input-imagen");
 const preview = document.getElementById("preview");
 const botonSubir = formulario.querySelector('button[type="submit"]');
-const mensajeError = document.getElementById("mensaje-error");
-const mensajeExito = document.getElementById("mensaje-exito");
 let urlPreview = null;
 let subiendo = false;
 
@@ -18,8 +16,6 @@ function limpiarPreview() {
 
 inputImagen.addEventListener("change", () => {
     limpiarPreview();
-    mensajeError.style.display = "none";
-    mensajeExito.style.display = "none";
     const archivo = inputImagen.files[0];
     if (!archivo) {
         return;
@@ -36,12 +32,9 @@ formulario.addEventListener("submit", async (e) => {
     if (subiendo) {
         return;
     }
-    mensajeError.style.display = "none";
-    mensajeExito.style.display = "none";
     const archivo = inputImagen.files[0];
     if (!archivo) {
-        mensajeError.textContent = "Selecciona una imagen antes de subir la prenda.";
-        mensajeError.style.display = "block";
+        UI.mostrarToast("Selecciona una imagen antes de subir la prenda.", "error");
         return;
     }
 
@@ -60,11 +53,9 @@ formulario.addEventListener("submit", async (e) => {
         await uploadPrenda(formData);
         formulario.reset();
         limpiarPreview();
-        mensajeError.style.display = "none";
-        mensajeExito.style.display = "block";
+        UI.mostrarToast("Prenda subida correctamente", "exito");
     } catch (error) {
-        mensajeError.textContent = error.message || "Error al subir la prenda.";
-        mensajeError.style.display = "block";
+        UI.mostrarToast(error.message || "Error al subir la prenda.", "error");
     } finally {
         subiendo = false;
         botonSubir.disabled = false;
