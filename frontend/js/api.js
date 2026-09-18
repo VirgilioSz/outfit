@@ -52,10 +52,15 @@ async function deleteOutfit(id) {
 }
 
 async function actualizarPrenda(id, datos) {
+    const formData = new FormData();
+    Object.entries(datos).forEach(([key, value]) => {
+        if (value !== null && value !== undefined && value !== "") {
+            formData.append(key, value);
+        }
+    });
     const res = await fetch(`${API_URL}/clothes/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(datos)
+        body: formData
     });
     if (!res.ok) {
         const error = await res.json();

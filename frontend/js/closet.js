@@ -51,32 +51,39 @@ function crearCard(prenda) {
 
 let prendaActual = null;
 let limpiarFocusTrap = null;
+let lightboxAbierto = false;
+let lightboxCerrando = false;
 
 function inicializarLightbox() {
     const overlay = document.getElementById("lightbox-prenda");
     const cerrarBtn = document.getElementById("lightbox-cerrar");
     const editarBtn = document.getElementById("lightbox-editar");
     const eliminarBtn = document.getElementById("lightbox-eliminar");
+    const cancelarBtn = document.getElementById("lightbox-cancelar");
 
-    cerrarBtn.addEventListener("click", (e) => {
+    cerrarBtn.onclick = (e) => {
         e.stopPropagation();
         cerrarLightbox();
-    });
-    overlay.addEventListener("click", (e) => {
+    };
+    overlay.onclick = (e) => {
         if (e.target === overlay) cerrarLightbox();
-    });
+    };
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && overlay.classList.contains("abierto")) {
             cerrarLightbox();
         }
     });
 
-    editarBtn.addEventListener("click", () => activarEdicion());
-    eliminarBtn.addEventListener("click", () => confirmarEliminar());
+    editarBtn.onclick = () => activarEdicion();
+    eliminarBtn.onclick = () => confirmarEliminar();
+    cancelarBtn.onclick = () => cancelarEdicion();
 }
 
 function abrirLightbox(prenda) {
+    if (lightboxAbierto || lightboxCerrando) return;
+    
     prendaActual = prenda;
+    lightboxAbierto = true;
     const overlay = document.getElementById("lightbox-prenda");
     const imagen = document.getElementById("lightbox-imagen");
     const infoGrid = document.getElementById("lightbox-info");
@@ -116,6 +123,9 @@ function abrirLightbox(prenda) {
 }
 
 function cerrarLightbox() {
+    if (!lightboxAbierto || lightboxCerrando) return;
+    
+    lightboxCerrando = true;
     const overlay = document.getElementById("lightbox-prenda");
     UI.cerrarPanel("#lightbox-prenda", ".lightbox-panel", () => {
         prendaActual = null;
@@ -124,6 +134,8 @@ function cerrarLightbox() {
             limpiarFocusTrap();
             limpiarFocusTrap = null;
         }
+        lightboxAbierto = false;
+        lightboxCerrando = false;
     });
 }
 
@@ -135,6 +147,7 @@ function activarEdicion() {
     const notas = document.getElementById("lightbox-notas");
     const editarBtn = document.getElementById("lightbox-editar");
     const eliminarBtn = document.getElementById("lightbox-eliminar");
+    const cancelarBtn = document.getElementById("lightbox-cancelar");
 
     // Guardar valores originales para cancelar
     infoGrid.dataset.originalHtml = infoGrid.innerHTML;
@@ -172,12 +185,20 @@ function activarEdicion() {
 
     editarBtn.innerHTML = `<i data-lucide="save"></i> Guardar`;
     editarBtn.onclick = guardarEdicion;
-    eliminarBtn.innerHTML = `<i data-lucide="x"></i> Cancelar`;
-    eliminarBtn.onclick = cancelarEdicion;
-    eliminarBtn.classList.remove("btn-peligro");
-    eliminarBtn.classList.add("btn-primario");
+    
+    // Mostrar botón cancelar, ocultar eliminar
+    eliminarBtn.style.display = "none";
+    cancelarBtn.style.display = "inline-flex";
+    cancelarBtn.onclick = cancelarEdicion;
 
     document.getElementById("edit-tipo").focus();
+    inicializarIconos();
+}
+
+function inicializarIconos() {
+    if (typeof lucide !== "undefined") {
+        lucide.createIcons();
+    }
 }
 
 function restaurarVistaLectura() {
@@ -185,6 +206,7 @@ function restaurarVistaLectura() {
     const notas = document.getElementById("lightbox-notas");
     const editarBtn = document.getElementById("lightbox-editar");
     const eliminarBtn = document.getElementById("lightbox-eliminar");
+    const cancelarBtn = document.getElementById("lightbox-cancelar");
 
     if (infoGrid.dataset.originalHtml) {
         infoGrid.innerHTML = infoGrid.dataset.originalHtml;
@@ -199,8 +221,8 @@ function restaurarVistaLectura() {
     editarBtn.onclick = activarEdicion;
     eliminarBtn.innerHTML = `<i data-lucide="trash-2"></i> Eliminar`;
     eliminarBtn.onclick = confirmarEliminar;
-    eliminarBtn.classList.remove("btn-primario");
-    eliminarBtn.classList.add("btn-peligro");
+    eliminarBtn.style.display = "inline-flex";
+    cancelarBtn.style.display = "none";
 }
 
 async function guardarEdicion() {
