@@ -4,18 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Closet</title>
+    <title>Generar Outfit</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
 </head>
 
 <body>
-    <!-- Navbar con links a: Closet, Subir prenda, Generar outfit, Historial -->
     <nav>
+        <a class="nav-logo" href="index.html">Outfit</a>
         <ul class="nav-links">
             <li><a href="index.html">Closet</a></li>
             <li><a href="upload.html">Subir prenda</a></li>
-            <li><a href="generate.html">Generar outfit</a></li>
+            <li><a href="generate.html" aria-current="page">Generar outfit</a></li>
             <li><a href="history.html">Historial</a></li>
         </ul>
     </nav>
@@ -25,7 +27,7 @@
 
         <!-- Selector de ocasión -->
         <div class="campo">
-            <label>¿Para qué ocasión?</label>
+            <label for="selector-ocasion">¿Para qué ocasión?</label>
             <select id="selector-ocasion" class="campo-select">
                 <option value="trabajo">Trabajo</option>
                 <option value="casual">Casual</option>
@@ -49,9 +51,12 @@
         <p id="mensaje-error" class="texto-error" style="display:none"></p>
     </div>
 
+    <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
     <!-- api.js primero, luego generate.js -->
     <script src="js/api.js"></script>
     <script src="js/generate.js"></script>
+    <script>lucide.createIcons();</script>
 </body>
 
 </html>

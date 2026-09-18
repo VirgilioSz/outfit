@@ -55,3 +55,24 @@ def borrar_prenda(db: Session, prenda_id: int) -> dict:
     db.delete(prenda)
     db.commit()
     return {"message": "Prenda eliminada"}
+
+
+def actualizar_prenda(db: Session, prenda_id: int, tipo: str = None, 
+                      color: str = None, estilo: str = None, 
+                      temporada: str = None, notas: str = None) -> Clothing:
+    prenda = obtener_prenda_por_id(db, prenda_id)
+    
+    if tipo is not None:
+        prenda.tipo = tipo
+    if color is not None:
+        prenda.color = color
+    if estilo is not None:
+        prenda.estilo = estilo
+    if temporada is not None:
+        prenda.temporada = temporada
+    if notas is not None:
+        prenda.notas = notas
+    
+    db.commit()
+    db.refresh(prenda)
+    return prenda

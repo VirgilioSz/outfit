@@ -54,3 +54,20 @@ async function getHistorial() {
 async function deleteOutfit(id) {
     return apiRequest(`/outfits/history/${id}`, { method: "DELETE" });
 }
+
+async function actualizarPrenda(id, datos) {
+    const res = await fetch(`${API_URL}/clothes/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos)
+    });
+    if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.detail);
+    }
+    return res.json();
+}
+
+async function getOutfitDetalle(id) {
+    return apiRequest(`/outfits/history/${id}`, { method: "GET" });
+}

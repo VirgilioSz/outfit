@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, UploadFile, File, Form
 from sqlalchemy.orm import Session
 from database import get_db
-from services.clothing_service import crear_prenda, obtener_prendas, obtener_prenda_por_id, borrar_prenda
+from services.clothing_service import crear_prenda, obtener_prendas, obtener_prenda_por_id, borrar_prenda, actualizar_prenda
 
 router = APIRouter()
 
@@ -32,3 +32,21 @@ def obtener_prenda(prenda_id: int, db: Session = Depends(get_db)):
 @router.delete("/{prenda_id}")
 def eliminar_prenda(prenda_id: int, db: Session = Depends(get_db)):
     return borrar_prenda(db, prenda_id)
+
+# ── PUT /{id} — actualizar prenda (solo metadatos) ──────────────
+@router.put("/{prenda_id}")
+async def actualizar_prenda_endpoint(
+    prenda_id: int,
+    tipo: str = Form(default=None),
+    color: str = Form(default=None),
+    estilo: str = Form(default=None),
+    temporada: str = Form(default=None),
+    notas: str = Form(default=None),
+    db: Session = Depends(get_db)
+):
+    # Verificar que al menos un campo viene
+    campos = [tipo, color, estilo, temporada, notas]
+    if all(c is None for c in campos):
+        raise HTTPException(status_code=400, detail="Debe proporcionar al menos un campo para actualizar")
+    
+    return actualizar_prenda(db, prenda_id, tipo, color, estilo, temporada, notas)
