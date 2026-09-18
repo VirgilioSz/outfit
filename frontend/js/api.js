@@ -22,10 +22,6 @@ async function getPrendas() {
     return apiRequest(`/clothes/`, { method: "GET" });
 }
 
-async function getPrenda(id) {
-    return apiRequest(`/clothes/${id}`, { method: "GET" });
-}
-
 async function uploadPrenda(formData) {
     const res = await fetch(`${API_URL}/clothes/`, {
         method: "POST",

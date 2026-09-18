@@ -23,11 +23,6 @@ async def crear_prenda_endpoint(
 def listar_prendas(db: Session = Depends(get_db)):
     return obtener_prendas(db)
 
-# ── GET /{id} — obtener una prenda ────────────────────────────
-@router.get("/{prenda_id}")
-def obtener_prenda(prenda_id: int, db: Session = Depends(get_db)):
-    return obtener_prenda_por_id(db, prenda_id)
-
 # ── DELETE /{id} — eliminar prenda ────────────────────────────
 @router.delete("/{prenda_id}")
 def eliminar_prenda(prenda_id: int, db: Session = Depends(get_db)):
