@@ -1,5 +1,7 @@
 const botonGenerar = document.getElementById("btn-generar");
 let generando = false;
+const ICONO_GENERAR = '<i data-lucide="sparkles"></i> Generar outfit';
+const ICONO_GENERANDO = '<i data-lucide="loader" class="icono-girar"></i> Generando...';
 
 botonGenerar.addEventListener("click", async () => {
     if (generando) {
@@ -7,6 +9,8 @@ botonGenerar.addEventListener("click", async () => {
     }
     generando = true;
     botonGenerar.disabled = true;
+    botonGenerar.innerHTML = ICONO_GENERANDO;
+    if (typeof lucide !== "undefined") lucide.createIcons();
     const ocasion = document.getElementById("selector-ocasion").value;
     document.getElementById("mensaje-cargando").style.display = "block";
     document.getElementById("resultado-outfit").style.display = "none";
@@ -31,6 +35,8 @@ botonGenerar.addEventListener("click", async () => {
     } finally {
         generando = false;
         botonGenerar.disabled = false;
+        botonGenerar.innerHTML = ICONO_GENERAR;
+        if (typeof lucide !== "undefined") lucide.createIcons();
         document.getElementById("mensaje-cargando").style.display = "none";
     }
 });

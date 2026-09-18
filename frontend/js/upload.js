@@ -2,6 +2,8 @@ const formulario = document.getElementById("form-upload");
 const inputImagen = document.getElementById("input-imagen");
 const preview = document.getElementById("preview");
 const botonSubir = formulario.querySelector('button[type="submit"]');
+const ICONO_SUBIR = '<i data-lucide="plus"></i> Subir prenda';
+const ICONO_SUBIENDO = '<i data-lucide="loader" class="icono-girar"></i> Subiendo...';
 let urlPreview = null;
 let subiendo = false;
 
@@ -38,10 +40,10 @@ formulario.addEventListener("submit", async (e) => {
         return;
     }
 
-    const textoBoton = botonSubir.textContent;
     subiendo = true;
     botonSubir.disabled = true;
-    botonSubir.textContent = "Subiendo prenda...";
+    botonSubir.innerHTML = ICONO_SUBIENDO;
+    if (typeof lucide !== "undefined") lucide.createIcons();
     try {
         const formData = new FormData();
         formData.append("imagen", archivo);
@@ -59,6 +61,7 @@ formulario.addEventListener("submit", async (e) => {
     } finally {
         subiendo = false;
         botonSubir.disabled = false;
-        botonSubir.textContent = textoBoton;
+        botonSubir.innerHTML = ICONO_SUBIR;
+        if (typeof lucide !== "undefined") lucide.createIcons();
     }
 });

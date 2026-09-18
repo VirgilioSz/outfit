@@ -29,9 +29,13 @@
     <div id="lista-historial"></div>
 
     <!-- Mensaje cuando no hay historial -->
-    <p id="mensaje-vacio" style="display:none">
-        No has generado ningún outfit todavía.
-    </p>
+    <div id="mensaje-vacio" style="display:none" class="empty-state animate-fade-in">
+        <i data-lucide="history" class="empty-state-icon"></i>
+        <p>No has generado ningún outfit todavía.</p>
+        <a href="generate.html" class="btn-primario">
+            <i data-lucide="sparkles"></i> Genera tu primer outfit
+        </a>
+    </div>
 
 <p id="mensaje-error" class="texto-error" style="display:none"></p>
 </div>
@@ -56,7 +60,7 @@
             </div>
         </div>
         <footer class="lightbox-footer">
-            <button class="btn-peligro" id="lightbox-outfit-eliminar">
+            <button class="btn-peligro" id="lightbox-outfit-eliminar" aria-label="Eliminar outfit del historial">
                 <i data-lucide="trash-2"></i> Eliminar outfit
             </button>
         </footer>

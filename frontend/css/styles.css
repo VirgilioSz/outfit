@@ -247,7 +247,7 @@ h1 {
 }
 
 .btn-peligro:hover {
-    color: white;
+    color: #111111;
 }
 
 .btn-peligro span {
@@ -583,6 +583,15 @@ h1 {
     40%, 80% { transform: translateX(8px); }
 }
 
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.icono-girar {
+    animation: spin 1s linear infinite;
+}
+
 .animate-fade-in { animation: fadeIn var(--transicion-normal) var(--easing); }
 .animate-slide-up { animation: slideUp var(--transicion-normal) var(--easing); }
 .animate-scale-in { animation: scaleIn var(--transicion-normal) var(--easing); }
@@ -682,4 +691,31 @@ i[data-lucide] {
 .btn-peligro i[data-lucide] {
     width: 16px;
     height: 16px;
+}
+
+/* ── Empty States ──────────────────────────────────────────────── */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--espaciado-xl);
+    text-align: center;
+    gap: var(--espaciado-lg);
+    color: var(--color-texto-muted);
+}
+
+.empty-state-icon {
+    width: 64px;
+    height: 64px;
+    opacity: 0.3;
+}
+
+.empty-state p {
+    font-size: 1.125rem;
+    margin: 0;
+}
+
+.empty-state .btn-primario {
+    margin-top: var(--espaciado-sm);
 }
