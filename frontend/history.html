@@ -4,18 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subir Prenda</title>
+    <title>Historial</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
 </head>
 
 <body>
     <nav>
+        <a class="nav-logo" href="index.html">Outfit</a>
         <ul class="nav-links">
             <li><a href="index.html">Closet</a></li>
             <li><a href="upload.html">Subir prenda</a></li>
             <li><a href="generate.html">Generar outfit</a></li>
-            <li><a href="history.html">Historial</a></li>
+            <li><a href="history.html" aria-current="page">Historial</a></li>
         </ul>
     </nav>
 
@@ -26,15 +29,50 @@
     <div id="lista-historial"></div>
 
     <!-- Mensaje cuando no hay historial -->
-    <p id="mensaje-vacio" style="display:none">
-        No has generado ningún outfit todavía.
-    </p>
+    <div id="mensaje-vacio" style="display:none" class="empty-state animate-fade-in">
+        <i data-lucide="history" class="empty-state-icon"></i>
+        <p>No has generado ningún outfit todavía.</p>
+        <a href="generate.html" class="btn-primario">
+            <i data-lucide="sparkles"></i> Genera tu primer outfit
+        </a>
+    </div>
 
-    <p id="mensaje-error" class="texto-error" style="display:none"></p>
+<p id="mensaje-error" class="texto-error" style="display:none"></p>
 </div>
 
-    <script src="js/api.js"></script>
-    <script src="js/history.js"></script>
+<!-- Lightbox para detalle de outfit -->
+<div class="lightbox-overlay" id="lightbox-outfit" role="dialog" aria-modal="true" aria-labelledby="lightbox-outfit-titulo">
+    <div class="lightbox-panel">
+        <header class="lightbox-header">
+            <h2 id="lightbox-outfit-titulo">Detalle de outfit</h2>
+            <button class="lightbox-close" id="lightbox-outfit-cerrar" aria-label="Cerrar detalle">
+                <i data-lucide="x"></i>
+            </button>
+        </header>
+        <div class="lightbox-body">
+            <div class="lightbox-outfit-meta">
+                <p class="lightbox-outfit-ocasion" id="lightbox-outfit-ocasion"></p>
+                <p class="lightbox-outfit-fecha" id="lightbox-outfit-fecha"></p>
+            </div>
+            <p class="lightbox-outfit-descripcion" id="lightbox-outfit-descripcion"></p>
+            <div class="grid-prendas stagger-children" id="lightbox-outfit-prendas" style="margin-top: var(--espaciado-lg);">
+                <!-- Prendas del outfit -->
+            </div>
+        </div>
+        <footer class="lightbox-footer">
+            <button class="btn-peligro" id="lightbox-outfit-eliminar" aria-label="Eliminar outfit del historial">
+                <i data-lucide="trash-2"></i> Eliminar outfit
+            </button>
+        </footer>
+    </div>
+</div>
+
+<div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/history.js"></script>
+<script>lucide.createIcons();</script>
 </body>
 
 </html>

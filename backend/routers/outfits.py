@@ -58,3 +58,19 @@ def eliminar_outfit(outfit_id: int, db: Session = Depends(get_db)):
     db.delete(outfit)
     db.commit()
     return {"message": "Outfit eliminado"}
+
+# ── GET /history/{id} — detalle de outfit con prendas completas ──
+@router.get("/history/{outfit_id}")
+def obtener_outfit_detalle(outfit_id: int, db: Session = Depends(get_db)):
+    outfit = db.query(OutfitHistory).filter(OutfitHistory.id == outfit_id).first()
+    if not outfit:
+        raise HTTPException(status_code=404, detail="Outfit no encontrado")
+    
+    prendas = db.query(Clothing).filter(Clothing.id.in_(outfit.prendas_ids)).all()
+    return {
+        "id": outfit.id,
+        "ocasion": outfit.ocasion,
+        "descripcion": outfit.descripcion,
+        "created_at": outfit.created_at,
+        "prendas": prendas
+    }

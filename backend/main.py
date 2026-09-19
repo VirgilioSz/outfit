@@ -4,6 +4,7 @@ from database import create_tables
 from config import CORS_ORIGINS, validate_config
 from routers import clothes, outfits
 from fastapi.staticfiles import StaticFiles
+from services.image_service import obtener_carpeta_uploads
 
 # 1. Crea la instancia de FastAPI
 app = FastAPI(title="Outfit", version="1.0")
@@ -30,4 +31,6 @@ async def health_status():
 app.include_router(clothes.router, prefix="/clothes", tags=["clothes"])
 app.include_router(outfits.router, prefix="/outfits", tags=["outfits"])
 
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+carpeta_uploads = obtener_carpeta_uploads()
+carpeta_uploads.mkdir(parents=True, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=carpeta_uploads), name="uploads")
