@@ -18,6 +18,47 @@
 </head>
 
 <body>
+    <!-- Weather widget - top right -->
+    <div class="weather-widget" id="weather-widget" role="region" aria-label="Clima actual">
+        <button class="weather-toggle" id="weather-toggle" aria-label="Mostrar/ocultar clima" aria-expanded="false">
+            <i data-lucide="cloud-sun" class="weather-icon-main" id="weather-icon-main"></i>
+            <span class="weather-temp" id="weather-temp">--°</span>
+        </button>
+        <div class="weather-panel" id="weather-panel" hidden>
+            <div class="weather-header">
+                <h3 class="weather-title">Clima actual</h3>
+                <button class="weather-close" id="weather-close" aria-label="Cerrar">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="weather-content">
+                <div class="weather-main">
+                    <i data-lucide="cloud" class="weather-icon-large" id="weather-icon-large"></i>
+                    <div class="weather-temp-group">
+                        <span class="weather-temp-large" id="weather-temp-large">--°</span>
+                        <span class="weather-desc" id="weather-desc">--</span>
+                    </div>
+                </div>
+                <div class="weather-details">
+                    <div class="weather-detail">
+                        <i data-lucide="thermometer" class="weather-detail-icon"></i>
+                        <span class="weather-detail-label">Sensación</span>
+                        <span class="weather-detail-value" id="weather-feels">--°</span>
+                    </div>
+                    <div class="weather-detail">
+                        <i data-lucide="droplets" class="weather-detail-icon"></i>
+                        <span class="weather-detail-label">Humedad</span>
+                        <span class="weather-detail-value" id="weather-humidity">--%</span>
+                    </div>
+                </div>
+                <div class="weather-location">
+                    <i data-lucide="map-pin" class="weather-location-icon"></i>
+                    <span id="weather-city">Saltillo, Coahuila, México</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <main class="home">
         <h1>OUTFIT</h1>
         <div class="home-grid stagger-children" id="home-grid">
@@ -49,6 +90,7 @@
 
     <script src="js/ui.js"></script>
     <script src="js/home.js"></script>
+    <script src="js/weather.js"></script>
     <script>lucide.createIcons();</script>
 </body>
 
