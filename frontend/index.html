@@ -14,14 +14,14 @@
     <link rel="stylesheet" href="css/styles.css" />
     <!-- Anime.js y Lucide via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 
 <body>
     <!-- Weather widget - top right -->
     <div class="weather-widget" id="weather-widget" role="region" aria-label="Clima actual">
         <button class="weather-toggle" id="weather-toggle" aria-label="Mostrar/ocultar clima" aria-expanded="false">
-            <i data-lucide="cloud-sun" class="weather-icon-main" id="weather-icon-main"></i>
+            <i data-lucide="cloud-sun" class="weather-icon-main" id="weather-icon-main" style="width: 20px; height: 20px;"></i>
             <span class="weather-temp" id="weather-temp">--°</span>
         </button>
         <div class="weather-panel" id="weather-panel" hidden>
@@ -33,7 +33,7 @@
             </div>
             <div class="weather-content">
                 <div class="weather-main">
-                    <i data-lucide="cloud" class="weather-icon-large" id="weather-icon-large"></i>
+                    <i data-lucide="cloud" class="weather-icon-large" id="weather-icon-large" style="width: 64px; height: 64px;"></i>
                     <div class="weather-temp-group">
                         <span class="weather-temp-large" id="weather-temp-large">--°</span>
                         <span class="weather-desc" id="weather-desc">--</span>

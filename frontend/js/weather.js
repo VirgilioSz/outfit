@@ -53,31 +53,14 @@ const Weather = (function () {
             return;
         }
         
-        // Get SVG from Lucide icons
-        if (typeof lucide !== 'undefined' && lucide.icons && lucide.icons[iconName]) {
-            const iconData = lucide.icons[iconName];
-            // lucide icons have a 'svg' property with the SVG markup
-            if (iconData.svg) {
-                container.innerHTML = iconData.svg;
-                // Apply size and color
-                const svg = container.querySelector('svg');
-                if (svg) {
-                    svg.style.width = '100%';
-                    svg.style.height = '100%';
-                    svg.style.color = 'currentColor';
-                }
-            } else if (iconData.toSvg) {
-                // Some versions have toSvg method
-                container.innerHTML = iconData.toSvg({ width: '100%', height: '100%' });
-            }
-        } else {
-            console.warn('Lucide icon not found:', iconName);
-            // Fallback to data-lucide approach
-            container.innerHTML = '';
-            container.setAttribute('data-lucide', iconName);
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
+        // Reset and set data-lucide, then call createIcons
+        container.innerHTML = '';
+        container.setAttribute('data-lucide', iconName);
+        
+        if (typeof lucide !== 'undefined') {
+            // Call createIcons to process this container
+            // Note: CDN version may not support 'nodes' option, so call globally
+            lucide.createIcons();
         }
     }
 
