@@ -719,3 +719,73 @@ i[data-lucide] {
 .empty-state .btn-primario {
     margin-top: var(--espaciado-sm);
 }
+
+/* ── Home / Landing ─────────────────────────────────────────────── */
+.home {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--espaciado-xl);
+    text-align: center;
+}
+
+.home h1 {
+    font-size: clamp(3rem, 10vw, 6rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--espaciado-xl);
+    color: var(--color-acento);
+}
+
+.home-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--espaciado-lg);
+    max-width: 800px;
+    width: 100%;
+}
+
+.home-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--espaciado-xl);
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-borde);
+    text-decoration: none;
+    color: var(--color-texto);
+    transition: transform var(--transicion-normal), box-shadow var(--transicion-normal), border-color var(--transicion-normal);
+}
+
+.home-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    border-color: var(--color-acento);
+}
+
+.home-card i[data-lucide] {
+    width: 48px;
+    height: 48px;
+    color: var(--color-acento);
+    margin-bottom: var(--espaciado-md);
+}
+
+.home-card h2 {
+    font-size: 1.25rem;
+    margin-bottom: var(--espaciado-sm);
+}
+
+.home-card p {
+    font-size: 0.875rem;
+    color: var(--color-texto-muted);
+    margin: 0;
+}
+
+@media (max-width: 600px) {
+    .home-grid {
+        grid-template-columns: 1fr;
+    }
+}
