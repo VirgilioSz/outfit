@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/styles.css" />
     <!-- Anime.js y Lucide via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 
 <body>
@@ -25,7 +25,64 @@
     </nav>
 
     <div class="contenedor">
-        <h1>Mi Closet</h1>
+        <div class="contenedor-header">
+            <h1>Mi Closet</h1>
+        </div>
+
+        <!-- Barra de filtros -->
+        <div class="filtros-bar" id="filtros-bar">
+            <select class="filtro-select" id="filtro-tipo" aria-label="Filtrar por tipo">
+                <option value="todos">Todos los tipos</option>
+                <option value="camiseta">Camiseta</option>
+                <option value="camisa">Camisa</option>
+                <option value="blusa">Blusa</option>
+                <option value="sudadera">Sudadera</option>
+                <option value="abrigo">Abrigo</option>
+                <option value="chaqueta">Chaqueta</option>
+                <option value="pantalon">Pantalón</option>
+                <option value="jeans">Jeans</option>
+                <option value="shorts">Shorts</option>
+                <option value="falda">Falda</option>
+                <option value="vestido">Vestido</option>
+                <option value="zapatos">Zapatos</option>
+                <option value="tenis">Tenis</option>
+                <option value="botas">Botas</option>
+                <option value="sandalias">Sandalias</option>
+            </select>
+            <select class="filtro-select" id="filtro-color" aria-label="Filtrar por color">
+                <option value="todos">Todos los colores</option>
+                <option value="negro">Negro</option>
+                <option value="blanco">Blanco</option>
+                <option value="gris">Gris</option>
+                <option value="azul">Azul</option>
+                <option value="rojo">Rojo</option>
+                <option value="verde">Verde</option>
+                <option value="amarillo">Amarillo</option>
+                <option value="naranja">Naranja</option>
+                <option value="morado">Morado</option>
+                <option value="rosa">Rosa</option>
+                <option value="cafe">Café</option>
+                <option value="beige">Beige</option>
+            </select>
+            <select class="filtro-select" id="filtro-estilo" aria-label="Filtrar por estilo">
+                <option value="todos">Todos los estilos</option>
+                <option value="casual">Casual</option>
+                <option value="formal">Formal</option>
+                <option value="deportivo">Deportivo</option>
+                <option value="elegante">Elegante</option>
+            </select>
+            <select class="filtro-select" id="filtro-temporada" aria-label="Filtrar por temporada">
+                <option value="todos">Todas las temporadas</option>
+                <option value="todas">Todas</option>
+                <option value="primavera">Primavera</option>
+                <option value="verano">Verano</option>
+                <option value="otoño">Otoño</option>
+                <option value="invierno">Invierno</option>
+            </select>
+            <button class="btn-secundario" id="filtros-limpiar" aria-label="Limpiar filtros">
+                <i data-lucide="x"></i> Limpiar
+            </button>
+        </div>
 
         <!-- Grilla de prendas — se llena dinámicamente con JS -->
         <div class="grid-prendas stagger-children" id="grid-prendas">

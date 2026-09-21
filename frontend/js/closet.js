@@ -1,11 +1,142 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    await inicializarFiltros();
     cargarPrendas();
     inicializarLightbox();
 });
 
+const FILTROS_STORAGE_KEY = "outfit_filtros_closet";
+
+function obtenerFiltrosGuardados() {
+    try {
+        const guardado = localStorage.getItem(FILTROS_STORAGE_KEY);
+        return guardado ? JSON.parse(guardado) : {
+            tipo: "todos",
+            color: "todos",
+            estilo: "todos",
+            temporada: "todos"
+        };
+    } catch {
+        return {
+            tipo: "todos",
+            color: "todos",
+            estilo: "todos",
+            temporada: "todos"
+        };
+    }
+}
+
+function guardarFiltros(filtros) {
+    try {
+        localStorage.setItem(FILTROS_STORAGE_KEY, JSON.stringify(filtros));
+    } catch (e) {
+        console.warn("No se pudieron guardar los filtros:", e);
+    }
+}
+
+async function inicializarFiltros() {
+}
+
+async function inicializarFiltros() {
+    // Cargar opciones de filtros desde el backend
+    try {
+        const opciones = await getOpcionesFiltros();
+        console.log('Opciones de filtros recibidas:', opciones);
+        poblarSelectFiltros(opciones);
+    } catch (error) {
+        console.error("Error cargando opciones de filtros:", error);
+        // Usar opciones por defecto si falla el backend
+    }
+    
+    const filtros = obtenerFiltrosGuardados();
+    console.log('Filtros guardados:', filtros);
+    
+    // Aplicar valores guardados a los selects
+    document.getElementById("filtro-tipo").value = filtros.tipo;
+    document.getElementById("filtro-color").value = filtros.color;
+    document.getElementById("filtro-estilo").value = filtros.estilo;
+    document.getElementById("filtro-temporada").value = filtros.temporada;
+    
+    // Event listeners para los filtros
+    document.getElementById("filtro-tipo").addEventListener("change", () => {
+        actualizarFiltro("tipo");
+    });
+    document.getElementById("filtro-color").addEventListener("change", () => {
+        actualizarFiltro("color");
+    });
+    document.getElementById("filtro-estilo").addEventListener("change", () => {
+        actualizarFiltro("estilo");
+    });
+    document.getElementById("filtro-temporada").addEventListener("change", () => {
+        actualizarFiltro("temporada");
+    });
+    
+    // Botón limpiar filtros
+    document.getElementById("filtros-limpiar").addEventListener("click", limpiarFiltros);
+}
+
+function poblarSelectFiltros(opciones) {
+    // Mapear opciones del backend a los selects
+    console.log('Poblando selects con:', opciones);
+    const mapeo = {
+        "filtro-tipo": opciones.tipos || [],
+        "filtro-color": opciones.colores || [],
+        "filtro-estilo": opciones.estilos || [],
+        "filtro-temporada": opciones.temporadas || []
+    };
+    
+    Object.entries(mapeo).forEach(([selectId, valores]) => {
+        const select = document.getElementById(selectId);
+        if (!select) return;
+        
+        // Guardar el valor "todos" que siempre debe estar primero
+        const opcionTodos = select.querySelector('option[value="todos"]');
+        const textoTodos = opcionTodos ? opcionTodos.textContent : "Todos";
+        
+        // Limpiar opciones excepto "todos"
+        select.innerHTML = `<option value="todos">${textoTodos}</option>`;
+        
+        // Agregar opciones dinámicas ordenadas
+        valores.forEach(valor => {
+            const option = document.createElement("option");
+            option.value = valor;
+            option.textContent = valor.charAt(0).toUpperCase() + valor.slice(1);
+            select.appendChild(option);
+        });
+    });
+}
+
+function actualizarFiltro(campo) {
+    const valor = document.getElementById(`filtro-${campo}`).value;
+    const filtros = obtenerFiltrosGuardados();
+    filtros[campo] = valor;
+    guardarFiltros(filtros);
+    cargarPrendas();
+}
+
+function limpiarFiltros() {
+    const filtros = {
+        tipo: "todos",
+        color: "todos",
+        estilo: "todos",
+        temporada: "todos"
+    };
+    guardarFiltros(filtros);
+    
+    // Actualizar UI
+    document.getElementById("filtro-tipo").value = "todos";
+    document.getElementById("filtro-color").value = "todos";
+    document.getElementById("filtro-estilo").value = "todos";
+    document.getElementById("filtro-temporada").value = "todos";
+    
+    cargarPrendas();
+}
+
 async function cargarPrendas() {
     try {
-        const prendas = await getPrendas();
+        const filtros = obtenerFiltrosGuardados();
+        console.log('Cargando prendas con filtros:', filtros);
+        const prendas = await getPrendas(filtros);
+        console.log('Prendas recibidas:', prendas);
         renderPrendas(prendas);
         document.getElementById("mensaje-vacio").style.display = prendas.length === 0 ? "block" : "none";
     } catch (error) {
