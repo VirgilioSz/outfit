@@ -622,6 +622,17 @@ h1 {
     font-size: 0.7rem;
 }
 
+/* ── Historial de Outfits ─────────────────────────────────────── */
+#lista-historial {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 2fr));
+    gap: 20px;
+}
+
+#lista-historial .card {
+    padding: 20px;
+}
+
 /* ── Animaciones base ────────────────────────────────────────── */
 @keyframes fadeIn {
     from { opacity: 0; }
