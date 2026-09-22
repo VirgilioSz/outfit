@@ -59,13 +59,19 @@
             <!-- Temporada -->
             <div class="campo">
                 <label for="input-temporada">Temporada</label>
-                <select id="input-temporada">
-                    <option value="todas">Todas</option>
-                    <option value="primavera">Primavera</option>
-                    <option value="verano">Verano</option>
-                    <option value="otoño">Otoño</option>
-                    <option value="invierno">Invierno</option>
-                </select>
+                <div class="custom-select" id="input-temporada" data-name="temporada" aria-label="Temporada">
+                    <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Temporada">
+                        <span class="custom-select-value">Todas</span>
+                        <i data-lucide="chevron-down" class="custom-select-arrow"></i>
+                    </button>
+                    <div class="custom-select-panel" role="listbox" aria-label="Temporadas" hidden>
+                        <div class="custom-select-option" data-value="todas" role="option" aria-selected="true">Todas</div>
+                        <div class="custom-select-option" data-value="primavera" role="option">Primavera</div>
+                        <div class="custom-select-option" data-value="verano" role="option">Verano</div>
+                        <div class="custom-select-option" data-value="otoño" role="option">Otoño</div>
+                        <div class="custom-select-option" data-value="invierno" role="option">Invierno</div>
+                    </div>
+                </div>
             </div>
 
             <!-- Notas -->

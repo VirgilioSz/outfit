@@ -41,7 +41,7 @@ async function inicializarFiltros() {
     try {
         const opciones = await getOpcionesFiltros();
         console.log('Opciones de filtros recibidas:', opciones);
-        poblarSelectFiltros(opciones);
+        poblarCustomSelects(opciones);
     } catch (error) {
         console.error("Error cargando opciones de filtros:", error);
         // Usar opciones por defecto si falla el backend
@@ -50,33 +50,21 @@ async function inicializarFiltros() {
     const filtros = obtenerFiltrosGuardados();
     console.log('Filtros guardados:', filtros);
     
-    // Aplicar valores guardados a los selects
-    document.getElementById("filtro-tipo").value = filtros.tipo;
-    document.getElementById("filtro-color").value = filtros.color;
-    document.getElementById("filtro-estilo").value = filtros.estilo;
-    document.getElementById("filtro-temporada").value = filtros.temporada;
+    // Aplicar valores guardados a los custom selects
+    setCustomSelectValue('filtro-tipo', filtros.tipo);
+    setCustomSelectValue('filtro-color', filtros.color);
+    setCustomSelectValue('filtro-estilo', filtros.estilo);
+    setCustomSelectValue('filtro-temporada', filtros.temporada);
     
-    // Event listeners para los filtros
-    document.getElementById("filtro-tipo").addEventListener("change", () => {
-        actualizarFiltro("tipo");
-    });
-    document.getElementById("filtro-color").addEventListener("change", () => {
-        actualizarFiltro("color");
-    });
-    document.getElementById("filtro-estilo").addEventListener("change", () => {
-        actualizarFiltro("estilo");
-    });
-    document.getElementById("filtro-temporada").addEventListener("change", () => {
-        actualizarFiltro("temporada");
-    });
+    // Inicializar custom selects
+    inicializarCustomSelects();
     
     // Botón limpiar filtros
     document.getElementById("filtros-limpiar").addEventListener("click", limpiarFiltros);
 }
 
-function poblarSelectFiltros(opciones) {
-    // Mapear opciones del backend a los selects
-    console.log('Poblando selects con:', opciones);
+function poblarCustomSelects(opciones) {
+    console.log('Poblando custom selects con:', opciones);
     const mapeo = {
         "filtro-tipo": opciones.tipos || [],
         "filtro-color": opciones.colores || [],
@@ -85,28 +73,131 @@ function poblarSelectFiltros(opciones) {
     };
     
     Object.entries(mapeo).forEach(([selectId, valores]) => {
-        const select = document.getElementById(selectId);
-        if (!select) return;
+        const panel = document.querySelector(`#${selectId} .custom-select-panel`);
+        if (!panel) return;
         
-        // Guardar el valor "todos" que siempre debe estar primero
-        const opcionTodos = select.querySelector('option[value="todos"]');
+        // Guardar el texto de la opción "todos"
+        const opcionTodos = panel.querySelector('.custom-select-option[data-value="todos"]');
         const textoTodos = opcionTodos ? opcionTodos.textContent : "Todos";
         
         // Limpiar opciones excepto "todos"
-        select.innerHTML = `<option value="todos">${textoTodos}</option>`;
+        panel.innerHTML = `<div class="custom-select-option" data-value="todos" role="option" aria-selected="true">${textoTodos}</div>`;
         
         // Agregar opciones dinámicas ordenadas
         valores.forEach(valor => {
-            const option = document.createElement("option");
-            option.value = valor;
+            const option = document.createElement("div");
+            option.className = "custom-select-option";
+            option.setAttribute("data-value", valor);
+            option.setAttribute("role", "option");
             option.textContent = valor.charAt(0).toUpperCase() + valor.slice(1);
-            select.appendChild(option);
+            panel.appendChild(option);
         });
     });
 }
 
-function actualizarFiltro(campo) {
-    const valor = document.getElementById(`filtro-${campo}`).value;
+function inicializarCustomSelects() {
+    document.querySelectorAll('.custom-select').forEach(select => {
+        const trigger = select.querySelector('.custom-select-trigger');
+        const panel = select.querySelector('.custom-select-panel');
+        const options = panel.querySelectorAll('.custom-select-option');
+        
+        // Toggle panel on trigger click
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = !panel.hidden;
+            
+            // Close all other panels
+            document.querySelectorAll('.custom-select-panel').forEach(p => {
+                if (p !== panel) p.hidden = true;
+            });
+            document.querySelectorAll('.custom-select').forEach(s => {
+                if (s !== select) s.setAttribute('aria-expanded', 'false');
+            });
+            
+            if (isOpen) {
+                panel.hidden = true;
+                select.setAttribute('aria-expanded', 'false');
+            } else {
+                panel.hidden = false;
+                select.setAttribute('aria-expanded', 'true');
+            }
+        });
+        
+        // Handle option selection
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                const value = option.getAttribute('data-value');
+                const selectId = option.closest('.custom-select').id;
+                const campo = selectId.replace('filtro-', '');
+                
+                // Update UI
+                const trigger = document.querySelector(`#${selectId} .custom-select-trigger`);
+                const valueSpan = trigger.querySelector('.custom-select-value');
+                valueSpan.textContent = option.textContent;
+                
+                // Update aria-selected
+                document.querySelectorAll(`#${selectId} .custom-select-option`).forEach(opt => {
+                    opt.setAttribute('aria-selected', 'false');
+                });
+                option.setAttribute('aria-selected', 'true');
+                
+                // Close panel
+                panel.hidden = true;
+                document.getElementById(selectId).setAttribute('aria-expanded', 'false');
+                
+                // Save filter and reload
+                actualizarFiltro(campo, value);
+            });
+            
+            // Keyboard navigation
+            option.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    option.click();
+                }
+            });
+        });
+        
+        // Close on outside click
+        document.addEventListener('click', (e) => {
+            if (!select.contains(e.target)) {
+                panel.hidden = true;
+                select.setAttribute('aria-expanded', 'false');
+            }
+        });
+        
+        // Keyboard support for trigger
+        trigger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                trigger.click();
+            } else if (e.key === 'Escape') {
+                panel.hidden = true;
+                select.setAttribute('aria-expanded', 'false');
+            }
+        });
+    });
+}
+
+function setCustomSelectValue(selectId, value) {
+    const select = document.getElementById(selectId);
+    if (!select) return;
+    
+    const option = select.querySelector(`.custom-select-option[data-value="${value}"]`);
+    if (option) {
+        const trigger = select.querySelector('.custom-select-trigger');
+        const valueSpan = trigger.querySelector('.custom-select-value');
+        valueSpan.textContent = option.textContent;
+        
+        // Update aria-selected
+        select.querySelectorAll('.custom-select-option').forEach(opt => {
+            opt.setAttribute('aria-selected', 'false');
+        });
+        option.setAttribute('aria-selected', 'true');
+    }
+}
+
+function actualizarFiltro(campo, valor) {
     const filtros = obtenerFiltrosGuardados();
     filtros[campo] = valor;
     guardarFiltros(filtros);
@@ -123,10 +214,10 @@ function limpiarFiltros() {
     guardarFiltros(filtros);
     
     // Actualizar UI
-    document.getElementById("filtro-tipo").value = "todos";
-    document.getElementById("filtro-color").value = "todos";
-    document.getElementById("filtro-estilo").value = "todos";
-    document.getElementById("filtro-temporada").value = "todos";
+    setCustomSelectValue('filtro-tipo', 'todos');
+    setCustomSelectValue('filtro-color', 'todos');
+    setCustomSelectValue('filtro-estilo', 'todos');
+    setCustomSelectValue('filtro-temporada', 'todos');
     
     cargarPrendas();
 }

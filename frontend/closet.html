@@ -29,56 +29,80 @@
             <h1>Mi Closet</h1>
         </div>
 
-        <!-- Barra de filtros -->
+<!-- Barra de filtros -->
         <div class="filtros-bar" id="filtros-bar">
-            <select class="filtro-select" id="filtro-tipo" aria-label="Filtrar por tipo">
-                <option value="todos">Todos los tipos</option>
-                <option value="camiseta">Camiseta</option>
-                <option value="camisa">Camisa</option>
-                <option value="blusa">Blusa</option>
-                <option value="sudadera">Sudadera</option>
-                <option value="abrigo">Abrigo</option>
-                <option value="chaqueta">Chaqueta</option>
-                <option value="pantalon">Pantalón</option>
-                <option value="jeans">Jeans</option>
-                <option value="shorts">Shorts</option>
-                <option value="falda">Falda</option>
-                <option value="vestido">Vestido</option>
-                <option value="zapatos">Zapatos</option>
-                <option value="tenis">Tenis</option>
-                <option value="botas">Botas</option>
-                <option value="sandalias">Sandalias</option>
-            </select>
-            <select class="filtro-select" id="filtro-color" aria-label="Filtrar por color">
-                <option value="todos">Todos los colores</option>
-                <option value="negro">Negro</option>
-                <option value="blanco">Blanco</option>
-                <option value="gris">Gris</option>
-                <option value="azul">Azul</option>
-                <option value="rojo">Rojo</option>
-                <option value="verde">Verde</option>
-                <option value="amarillo">Amarillo</option>
-                <option value="naranja">Naranja</option>
-                <option value="morado">Morado</option>
-                <option value="rosa">Rosa</option>
-                <option value="cafe">Café</option>
-                <option value="beige">Beige</option>
-            </select>
-            <select class="filtro-select" id="filtro-estilo" aria-label="Filtrar por estilo">
-                <option value="todos">Todos los estilos</option>
-                <option value="casual">Casual</option>
-                <option value="formal">Formal</option>
-                <option value="deportivo">Deportivo</option>
-                <option value="elegante">Elegante</option>
-            </select>
-            <select class="filtro-select" id="filtro-temporada" aria-label="Filtrar por temporada">
-                <option value="todos">Todas las temporadas</option>
-                <option value="todas">Todas</option>
-                <option value="primavera">Primavera</option>
-                <option value="verano">Verano</option>
-                <option value="otoño">Otoño</option>
-                <option value="invierno">Invierno</option>
-            </select>
+            <div class="custom-select" id="filtro-tipo" data-name="tipo" aria-label="Filtrar por tipo">
+                <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Filtrar por tipo">
+                    <span class="custom-select-value">Todos los tipos</span>
+                    <i data-lucide="chevron-down" class="custom-select-arrow"></i>
+                </button>
+                <div class="custom-select-panel" role="listbox" aria-label="Tipos de prendas" hidden>
+                    <div class="custom-select-option" data-value="todos" role="option" aria-selected="true">Todos los tipos</div>
+                    <div class="custom-select-option" data-value="camiseta" role="option">Camiseta</div>
+                    <div class="custom-select-option" data-value="camisa" role="option">Camisa</div>
+                    <div class="custom-select-option" data-value="blusa" role="option">Blusa</div>
+                    <div class="custom-select-option" data-value="sudadera" role="option">Sudadera</div>
+                    <div class="custom-select-option" data-value="abrigo" role="option">Abrigo</div>
+                    <div class="custom-select-option" data-value="chaqueta" role="option">Chaqueta</div>
+                    <div class="custom-select-option" data-value="pantalon" role="option">Pantalón</div>
+                    <div class="custom-select-option" data-value="jeans" role="option">Jeans</div>
+                    <div class="custom-select-option" data-value="shorts" role="option">Shorts</div>
+                    <div class="custom-select-option" data-value="falda" role="option">Falda</div>
+                    <div class="custom-select-option" data-value="vestido" role="option">Vestido</div>
+                    <div class="custom-select-option" data-value="zapatos" role="option">Zapatos</div>
+                    <div class="custom-select-option" data-value="tenis" role="option">Tenis</div>
+                    <div class="custom-select-option" data-value="botas" role="option">Botas</div>
+                    <div class="custom-select-option" data-value="sandalias" role="option">Sandalias</div>
+                </div>
+            </div>
+            <div class="custom-select" id="filtro-color" data-name="color" aria-label="Filtrar por color">
+                <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Filtrar por color">
+                    <span class="custom-select-value">Todos los colores</span>
+                    <i data-lucide="chevron-down" class="custom-select-arrow"></i>
+                </button>
+                <div class="custom-select-panel" role="listbox" aria-label="Colores" hidden>
+                    <div class="custom-select-option" data-value="todos" role="option" aria-selected="true">Todos los colores</div>
+                    <div class="custom-select-option" data-value="negro" role="option">Negro</div>
+                    <div class="custom-select-option" data-value="blanco" role="option">Blanco</div>
+                    <div class="custom-select-option" data-value="gris" role="option">Gris</div>
+                    <div class="custom-select-option" data-value="azul" role="option">Azul</div>
+                    <div class="custom-select-option" data-value="rojo" role="option">Rojo</div>
+                    <div class="custom-select-option" data-value="verde" role="option">Verde</div>
+                    <div class="custom-select-option" data-value="amarillo" role="option">Amarillo</div>
+                    <div class="custom-select-option" data-value="naranja" role="option">Naranja</div>
+                    <div class="custom-select-option" data-value="morado" role="option">Morado</div>
+                    <div class="custom-select-option" data-value="rosa" role="option">Rosa</div>
+                    <div class="custom-select-option" data-value="cafe" role="option">Café</div>
+                    <div class="custom-select-option" data-value="beige" role="option">Beige</div>
+                </div>
+            </div>
+            <div class="custom-select" id="filtro-estilo" data-name="estilo" aria-label="Filtrar por estilo">
+                <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Filtrar por estilo">
+                    <span class="custom-select-value">Todos los estilos</span>
+                    <i data-lucide="chevron-down" class="custom-select-arrow"></i>
+                </button>
+                <div class="custom-select-panel" role="listbox" aria-label="Estilos" hidden>
+                    <div class="custom-select-option" data-value="todos" role="option" aria-selected="true">Todos los estilos</div>
+                    <div class="custom-select-option" data-value="casual" role="option">Casual</div>
+                    <div class="custom-select-option" data-value="formal" role="option">Formal</div>
+                    <div class="custom-select-option" data-value="deportivo" role="option">Deportivo</div>
+                    <div class="custom-select-option" data-value="elegante" role="option">Elegante</div>
+                </div>
+            </div>
+            <div class="custom-select" id="filtro-temporada" data-name="temporada" aria-label="Filtrar por temporada">
+                <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Filtrar por temporada">
+                    <span class="custom-select-value">Todas las temporadas</span>
+                    <i data-lucide="chevron-down" class="custom-select-arrow"></i>
+                </button>
+                <div class="custom-select-panel" role="listbox" aria-label="Temporadas" hidden>
+                    <div class="custom-select-option" data-value="todos" role="option" aria-selected="true">Todas las temporadas</div>
+                    <div class="custom-select-option" data-value="todas" role="option">Todas</div>
+                    <div class="custom-select-option" data-value="primavera" role="option">Primavera</div>
+                    <div class="custom-select-option" data-value="verano" role="option">Verano</div>
+                    <div class="custom-select-option" data-value="otoño" role="option">Otoño</div>
+                    <div class="custom-select-option" data-value="invierno" role="option">Invierno</div>
+                </div>
+            </div>
             <button class="btn-secundario" id="filtros-limpiar" aria-label="Limpiar filtros">
                 <i data-lucide="x"></i> Limpiar
             </button>
