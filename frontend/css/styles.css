@@ -12,6 +12,11 @@
     --color-acento-hover: #D4C9B8;
     --color-borde-hover: #3A3A3A;
 
+    --color-vscode-blue: #007ACC;
+    --color-vscode-blue-glow: rgba(0, 122, 204, 0.3);
+    --color-vscode-blue-strong: rgba(0, 122, 204, 0.5);
+    --color-vscode-blue-border: rgba(0, 122, 204, 0.5);
+
     --fuente-principal: "Inter", sans-serif;
     --tamaño-base: 16px;
 
@@ -38,14 +43,19 @@
     box-sizing: border-box;
 }
 
+html {
+    min-height: 100vh;
+}
+
 /* ── Body ───────────────────────────────────────────────────── */
 body {
     font-family: var(--fuente-principal);
-    background: var(--color-fondo);
+    background: linear-gradient(180deg, #050505 0%, #1a1a1a 100%);
     color: var(--color-texto);
     font-size: var(--tamaño-base);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
 }
 
 /* ── Navbar ─────────────────────────────────────────────────── */
@@ -92,12 +102,12 @@ nav {
 }
 
 .nav-links a:hover {
-    color: #FFB347;
+    color: var(--color-vscode-blue);
     transform: scale(1.1);
     text-shadow: 
-        0 0 8px rgba(255, 179, 71, 0.8),
-        0 0 20px rgba(255, 179, 71, 0.5),
-        0 0 40px rgba(255, 179, 71, 0.3);
+        0 0 8px var(--color-vscode-blue-glow),
+        0 0 20px var(--color-vscode-blue-strong),
+        0 0 40px var(--color-vscode-blue-strong);
 }
 
 /* ── Contenedor ─────────────────────────────────────────────── */
@@ -188,8 +198,13 @@ h1 {
 
 .card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-    border-color: #3A3A3A;
+    box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.4),
+        0 0 20px var(--color-vscode-blue-glow),
+        0 0 40px var(--color-vscode-blue-strong),
+        inset 0 0 20px var(--color-vscode-blue-glow);
+    border-color: var(--color-vscode-blue);
+    border-width: 2px;
 }
 
 .card img {
@@ -225,8 +240,8 @@ h1 {
 
 /* ── Botones ────────────────────────────────────────────────── */
 .btn-primario {
-    background: var(--color-acento);
-    color: #111111;
+    background: var(--color-vscode-blue);
+    color: #ffffff;
     padding: 10px var(--espaciado-md);
     border-radius: var(--radio-borde);
     border: none;
@@ -234,11 +249,12 @@ h1 {
     font-family: var(--fuente-principal);
     font-size: 0.875rem;
     font-weight: 500;
-    transition: opacity 0.2s ease;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-primario:hover {
-    opacity: 0.85;
+    background: #005fa3;
+    box-shadow: 0 0 20px var(--color-vscode-blue-glow);
 }
 
 .btn-secundario {
@@ -258,8 +274,8 @@ h1 {
 }
 
 .btn-secundario:hover {
-    color: var(--color-texto);
-    border-color: var(--color-texto-muted);
+    color: var(--color-vscode-blue);
+    border-color: var(--color-vscode-blue);
     background: var(--color-borde);
 }
 
@@ -844,8 +860,13 @@ i[data-lucide] {
 
 .home-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-    border-color: var(--color-acento);
+    box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.4),
+        0 0 20px var(--color-vscode-blue-glow),
+        0 0 40px var(--color-vscode-blue-strong),
+        inset 0 0 20px var(--color-vscode-blue-glow);
+    border-color: var(--color-vscode-blue);
+    border-width: 2px;
 }
 
 .home-card i[data-lucide] {
