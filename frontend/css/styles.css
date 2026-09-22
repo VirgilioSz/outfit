@@ -450,6 +450,47 @@ h1 {
     color: var(--color-texto-muted);
 }
 
+/* ── File Upload ──────────────────────────────────────────────── */
+.file-upload-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaciado-sm);
+}
+
+.file-upload-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espaciado-sm);
+    padding: 12px var(--espaciado-md);
+    background: var(--color-vscode-blue);
+    color: #ffffff !important;
+    border: none;
+    border-radius: var(--radio-borde);
+    cursor: pointer;
+    font-family: var(--fuente-principal);
+    font-size: var(--tamaño-base);
+    font-weight: 500;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+    align-self: flex-start;
+}
+
+.file-upload-label:hover {
+    background: #005fa3;
+    box-shadow: 0 0 20px var(--color-vscode-blue-glow);
+}
+
+.file-upload-label:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--color-vscode-blue-glow);
+}
+
+.file-upload-label i[data-lucide] {
+    width: 18px;
+    height: 18px;
+    color: #ffffff;
+}
+
 /* ── Mensajes ───────────────────────────────────────────────── */
 .texto-error {
     color: var(--color-error);

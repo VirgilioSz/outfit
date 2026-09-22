@@ -33,7 +33,12 @@
             <!-- Imagen -->
             <div class="campo">
                 <label for="input-imagen">Foto de la prenda</label>
-                <input type="file" id="input-imagen" accept=".jpg,.jpeg,.png,.webp" required>
+                <div class="file-upload-wrapper">
+                    <input type="file" id="input-imagen" accept=".jpg,.jpeg,.png,.webp" required hidden>
+                    <label for="input-imagen" class="btn-primario file-upload-label">
+                        <i data-lucide="upload"></i> Seleccionar imagen
+                    </label>
+                </div>
                 <img id="preview" style="display:none; margin-top: var(--espaciado-sm);
                      max-width: 200px; border-radius: var(--radio-borde);" alt="Preview">
             </div>
