@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Depends, UploadFile, File, Form
+from fastapi import APIRouter, Depends, UploadFile, File, Form, Query
 from sqlalchemy.orm import Session
 from database import get_db
-from services.clothing_service import crear_prenda, obtener_prendas, obtener_prenda_por_id, borrar_prenda, actualizar_prenda
+from services.clothing_service import crear_prenda, obtener_prendas, obtener_prenda_por_id, borrar_prenda, actualizar_prenda, obtener_prendas_filtradas, obtener_opciones_filtros
 
 router = APIRouter()
 
@@ -18,10 +18,19 @@ async def crear_prenda_endpoint(
 ):
     return crear_prenda(db, imagen, tipo, color, estilo, temporada, notas)
 
-# ── GET / — listar todas las prendas ──────────────────────────
+# ── GET / — listar todas las prendas (con filtros opcionales) ──────
 @router.get("/")
-def listar_prendas(db: Session = Depends(get_db)):
-    return obtener_prendas(db)
+def listar_prendas(
+    tipo: str = Query(default=None),
+    color: str = Query(default=None),
+    estilo: str = Query(default=None),
+    temporada: str = Query(default=None),
+    db: Session = Depends(get_db)
+):
+    # Si no hay filtros, usar obtener_prendas (optimización)
+    if not any([tipo, color, estilo, temporada]):
+        return obtener_prendas(db)
+    return obtener_prendas_filtradas(db, tipo, color, estilo, temporada)
 
 # ── DELETE /{id} — eliminar prenda ────────────────────────────
 @router.delete("/{prenda_id}")
@@ -45,3 +54,8 @@ async def actualizar_prenda_endpoint(
         raise HTTPException(status_code=400, detail="Debe proporcionar al menos un campo para actualizar")
     
     return actualizar_prenda(db, prenda_id, tipo, color, estilo, temporada, notas)
+
+# ── GET /filtros/opciones — obtener opciones únicas para filtros ────
+@router.get("/filtros/opciones")
+def obtener_opciones_filtros_endpoint(db: Session = Depends(get_db)):
+    return obtener_opciones_filtros(db)

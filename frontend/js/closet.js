@@ -1,11 +1,233 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    await inicializarFiltros();
     cargarPrendas();
     inicializarLightbox();
 });
 
+const FILTROS_STORAGE_KEY = "outfit_filtros_closet";
+
+function obtenerFiltrosGuardados() {
+    try {
+        const guardado = localStorage.getItem(FILTROS_STORAGE_KEY);
+        return guardado ? JSON.parse(guardado) : {
+            tipo: "todos",
+            color: "todos",
+            estilo: "todos",
+            temporada: "todos"
+        };
+    } catch {
+        return {
+            tipo: "todos",
+            color: "todos",
+            estilo: "todos",
+            temporada: "todos"
+        };
+    }
+}
+
+function guardarFiltros(filtros) {
+    try {
+        localStorage.setItem(FILTROS_STORAGE_KEY, JSON.stringify(filtros));
+    } catch (e) {
+        console.warn("No se pudieron guardar los filtros:", e);
+    }
+}
+
+async function inicializarFiltros() {
+}
+
+async function inicializarFiltros() {
+    // Cargar opciones de filtros desde el backend
+    try {
+        const opciones = await getOpcionesFiltros();
+        console.log('Opciones de filtros recibidas:', opciones);
+        poblarCustomSelects(opciones);
+    } catch (error) {
+        console.error("Error cargando opciones de filtros:", error);
+        // Usar opciones por defecto si falla el backend
+    }
+    
+    const filtros = obtenerFiltrosGuardados();
+    console.log('Filtros guardados:', filtros);
+    
+    // Aplicar valores guardados a los custom selects
+    setCustomSelectValue('filtro-tipo', filtros.tipo);
+    setCustomSelectValue('filtro-color', filtros.color);
+    setCustomSelectValue('filtro-estilo', filtros.estilo);
+    setCustomSelectValue('filtro-temporada', filtros.temporada);
+    
+    // Inicializar custom selects
+    inicializarCustomSelects();
+    
+    // Botón limpiar filtros
+    document.getElementById("filtros-limpiar").addEventListener("click", limpiarFiltros);
+}
+
+function poblarCustomSelects(opciones) {
+    console.log('Poblando custom selects con:', opciones);
+    const mapeo = {
+        "filtro-tipo": opciones.tipos || [],
+        "filtro-color": opciones.colores || [],
+        "filtro-estilo": opciones.estilos || [],
+        "filtro-temporada": opciones.temporadas || []
+    };
+    
+    Object.entries(mapeo).forEach(([selectId, valores]) => {
+        const panel = document.querySelector(`#${selectId} .custom-select-panel`);
+        if (!panel) return;
+        
+        // Guardar el texto de la opción "todos"
+        const opcionTodos = panel.querySelector('.custom-select-option[data-value="todos"]');
+        const textoTodos = opcionTodos ? opcionTodos.textContent : "Todos";
+        
+        // Limpiar opciones excepto "todos"
+        panel.innerHTML = `<div class="custom-select-option" data-value="todos" role="option" aria-selected="true">${textoTodos}</div>`;
+        
+        // Agregar opciones dinámicas ordenadas
+        valores.forEach(valor => {
+            const option = document.createElement("div");
+            option.className = "custom-select-option";
+            option.setAttribute("data-value", valor);
+            option.setAttribute("role", "option");
+            option.textContent = valor.charAt(0).toUpperCase() + valor.slice(1);
+            panel.appendChild(option);
+        });
+    });
+}
+
+function inicializarCustomSelects() {
+    document.querySelectorAll('.custom-select').forEach(select => {
+        const trigger = select.querySelector('.custom-select-trigger');
+        const panel = select.querySelector('.custom-select-panel');
+        const options = panel.querySelectorAll('.custom-select-option');
+        
+        // Toggle panel on trigger click
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = !panel.hidden;
+            
+            // Close all other panels
+            document.querySelectorAll('.custom-select-panel').forEach(p => {
+                if (p !== panel) p.hidden = true;
+            });
+            document.querySelectorAll('.custom-select').forEach(s => {
+                if (s !== select) s.setAttribute('aria-expanded', 'false');
+            });
+            
+            if (isOpen) {
+                panel.hidden = true;
+                select.setAttribute('aria-expanded', 'false');
+            } else {
+                panel.hidden = false;
+                select.setAttribute('aria-expanded', 'true');
+            }
+        });
+        
+        // Handle option selection
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                const value = option.getAttribute('data-value');
+                const selectId = option.closest('.custom-select').id;
+                const campo = selectId.replace('filtro-', '');
+                
+                // Update UI
+                const trigger = document.querySelector(`#${selectId} .custom-select-trigger`);
+                const valueSpan = trigger.querySelector('.custom-select-value');
+                valueSpan.textContent = option.textContent;
+                
+                // Update aria-selected
+                document.querySelectorAll(`#${selectId} .custom-select-option`).forEach(opt => {
+                    opt.setAttribute('aria-selected', 'false');
+                });
+                option.setAttribute('aria-selected', 'true');
+                
+                // Close panel
+                panel.hidden = true;
+                document.getElementById(selectId).setAttribute('aria-expanded', 'false');
+                
+                // Save filter and reload
+                actualizarFiltro(campo, value);
+            });
+            
+            // Keyboard navigation
+            option.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    option.click();
+                }
+            });
+        });
+        
+        // Close on outside click
+        document.addEventListener('click', (e) => {
+            if (!select.contains(e.target)) {
+                panel.hidden = true;
+                select.setAttribute('aria-expanded', 'false');
+            }
+        });
+        
+        // Keyboard support for trigger
+        trigger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                trigger.click();
+            } else if (e.key === 'Escape') {
+                panel.hidden = true;
+                select.setAttribute('aria-expanded', 'false');
+            }
+        });
+    });
+}
+
+function setCustomSelectValue(selectId, value) {
+    const select = document.getElementById(selectId);
+    if (!select) return;
+    
+    const option = select.querySelector(`.custom-select-option[data-value="${value}"]`);
+    if (option) {
+        const trigger = select.querySelector('.custom-select-trigger');
+        const valueSpan = trigger.querySelector('.custom-select-value');
+        valueSpan.textContent = option.textContent;
+        
+        // Update aria-selected
+        select.querySelectorAll('.custom-select-option').forEach(opt => {
+            opt.setAttribute('aria-selected', 'false');
+        });
+        option.setAttribute('aria-selected', 'true');
+    }
+}
+
+function actualizarFiltro(campo, valor) {
+    const filtros = obtenerFiltrosGuardados();
+    filtros[campo] = valor;
+    guardarFiltros(filtros);
+    cargarPrendas();
+}
+
+function limpiarFiltros() {
+    const filtros = {
+        tipo: "todos",
+        color: "todos",
+        estilo: "todos",
+        temporada: "todos"
+    };
+    guardarFiltros(filtros);
+    
+    // Actualizar UI
+    setCustomSelectValue('filtro-tipo', 'todos');
+    setCustomSelectValue('filtro-color', 'todos');
+    setCustomSelectValue('filtro-estilo', 'todos');
+    setCustomSelectValue('filtro-temporada', 'todos');
+    
+    cargarPrendas();
+}
+
 async function cargarPrendas() {
     try {
-        const prendas = await getPrendas();
+        const filtros = obtenerFiltrosGuardados();
+        console.log('Cargando prendas con filtros:', filtros);
+        const prendas = await getPrendas(filtros);
+        console.log('Prendas recibidas:', prendas);
         renderPrendas(prendas);
         document.getElementById("mensaje-vacio").style.display = prendas.length === 0 ? "block" : "none";
     } catch (error) {

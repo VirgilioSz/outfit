@@ -4,84 +4,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Closet</title>
+    <title>Outfit AI</title>
+    <meta name="description" content="Outfit AI - Gestiona tu closet digital y genera outfits con IA">
+    <meta property="og:title" content="Outfit AI">
+    <meta property="og:description" content="Tu closet inteligente con IA - Sube fotos, CLIP analiza, Gemini sugiere outfits">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css" />
     <!-- Anime.js y Lucide via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 
 <body>
-    <!-- Navbar con links a: Closet, Subir prenda, Generar outfit, Historial -->
-    <nav>
-        <a class="nav-logo" href="index.html">Outfit</a>
-        <ul class="nav-links">
-            <li><a href="index.html" aria-current="page">Closet</a></li>
-            <li><a href="upload.html">Subir prenda</a></li>
-            <li><a href="generate.html">Generar outfit</a></li>
-            <li><a href="history.html">Historial</a></li>
-        </ul>
-    </nav>
-
-    <div class="contenedor">
-        <h1>Mi Closet</h1>
-
-        <!-- Grilla de prendas — se llena dinámicamente con JS -->
-        <div class="grid-prendas stagger-children" id="grid-prendas">
-            <!-- closet.js inyecta las cards aquí -->
-        </div>
-
-        <!-- Mensaje cuando no hay prendas -->
-        <div id="mensaje-vacio" style="display:none" class="animate-fade-in empty-state">
-            <i data-lucide="shirt" class="empty-state-icon"></i>
-            <p>No tienes prendas todavía.</p>
-            <a href="upload.html" class="btn-primario">
-                <i data-lucide="plus"></i> Sube tu primera prenda
-            </a>
-        </div>
-    </div>
-
-    <!-- Lightbox para detalle de prenda -->
-    <div class="lightbox-overlay" id="lightbox-prenda" role="dialog" aria-modal="true" aria-labelledby="lightbox-titulo">
-        <div class="lightbox-panel">
-            <header class="lightbox-header">
-                <h2 id="lightbox-titulo">Detalle de prenda</h2>
-                <button class="lightbox-close" id="lightbox-cerrar" aria-label="Cerrar detalle">
+    <!-- Weather widget - top right -->
+    <div class="weather-widget" id="weather-widget" role="region" aria-label="Clima actual">
+        <button class="weather-toggle" id="weather-toggle" aria-label="Mostrar/ocultar clima" aria-expanded="false">
+            <i data-lucide="cloud-sun" class="weather-icon-main" id="weather-icon-main" style="width: 20px; height: 20px;"></i>
+            <span class="weather-temp" id="weather-temp">--°</span>
+        </button>
+        <div class="weather-panel" id="weather-panel" hidden>
+            <div class="weather-header">
+                <h3 class="weather-title">Clima actual</h3>
+                <button class="weather-close" id="weather-close" aria-label="Cerrar">
                     <i data-lucide="x"></i>
                 </button>
-            </header>
-            <div class="lightbox-body">
-                <img class="lightbox-imagen" id="lightbox-imagen" src="" alt="">
-                <div class="lightbox-info-grid" id="lightbox-info">
-                    <!-- Campos dinámicos -->
+            </div>
+            <div class="weather-content">
+                <div class="weather-main">
+                    <i data-lucide="cloud" class="weather-icon-large" id="weather-icon-large" style="width: 64px; height: 64px;"></i>
+                    <div class="weather-temp-group">
+                        <span class="weather-temp-large" id="weather-temp-large">--°</span>
+                        <span class="weather-desc" id="weather-desc">--</span>
+                    </div>
                 </div>
-                <div class="lightbox-campo" style="grid-column: 1 / -1;">
-                    <span class="lightbox-campo-label">Notas</span>
-                    <p class="lightbox-notas" id="lightbox-notas">—</p>
+                <div class="weather-details">
+                    <div class="weather-detail">
+                        <i data-lucide="thermometer" class="weather-detail-icon"></i>
+                        <span class="weather-detail-label">Sensación</span>
+                        <span class="weather-detail-value" id="weather-feels">--°</span>
+                    </div>
+                    <div class="weather-detail">
+                        <i data-lucide="droplets" class="weather-detail-icon"></i>
+                        <span class="weather-detail-label">Humedad</span>
+                        <span class="weather-detail-value" id="weather-humidity">--%</span>
+                    </div>
+                </div>
+                <div class="weather-location">
+                    <i data-lucide="map-pin" class="weather-location-icon"></i>
+                    <span id="weather-city">Saltillo, Coahuila, México</span>
                 </div>
             </div>
-            <footer class="lightbox-footer">
-                <button class="btn-primario" id="lightbox-editar" aria-label="Editar prenda">
-                    <i data-lucide="edit-2"></i> Editar
-                </button>
-                <button class="btn-peligro" id="lightbox-eliminar" aria-label="Eliminar prenda">
-                    <i data-lucide="trash-2"></i> Eliminar
-                </button>
-                <button class="btn-secundario" id="lightbox-cancelar" style="display:none;" aria-label="Cancelar edición">
-                    <i data-lucide="x"></i> Cancelar
-                </button>
-            </footer>
         </div>
     </div>
+
+    <main class="home">
+        <h1>OUTFIT</h1>
+        <div class="home-grid stagger-children" id="home-grid">
+            <a href="closet.html" class="home-card">
+                <i data-lucide="shirt"></i>
+                <h2>Closet</h2>
+                <p>Ver y gestionar tus prendas</p>
+            </a>
+            <a href="upload.html" class="home-card">
+                <i data-lucide="plus"></i>
+                <h2>Subir prenda</h2>
+                <p>Añadir nueva prenda al closet</p>
+            </a>
+            <a href="generate.html" class="home-card">
+                <i data-lucide="sparkles"></i>
+                <h2>Generar outfit</h2>
+                <p>Crear combinaciones por ocasión</p>
+            </a>
+            <a href="history.html" class="home-card">
+                <i data-lucide="history"></i>
+                <h2>Historial</h2>
+                <p>Ver outfits generados</p>
+            </a>
+        </div>
+    </main>
 
     <!-- Toast container -->
     <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-    <!-- api.js primero, luego ui.js, luego closet.js -->
-    <script src="js/api.js"></script>
     <script src="js/ui.js"></script>
-    <script src="js/closet.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/weather.js"></script>
     <script>lucide.createIcons();</script>
 </body>
 

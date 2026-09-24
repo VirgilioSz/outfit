@@ -26,10 +26,10 @@ function renderHistorial(outfits) {
         div.setAttribute("aria-label", `Ver detalle de outfit para ${outfit.ocasion}`);
         div.innerHTML = `
             <h3>${UI.capitalizar(outfit.ocasion)}</h3>
-            <p>${outfit.descripcion}</p>
             <p style="color: var(--color-secundario)">
                 ${new Date(outfit.created_at).toLocaleDateString("es-MX")}
             </p>
+            <p>${outfit.descripcion}</p>
         `;
         div.addEventListener("click", () => abrirLightboxOutfit(outfit.id));
         div.addEventListener("keydown", (e) => {

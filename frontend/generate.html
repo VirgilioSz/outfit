@@ -8,14 +8,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 
 <body>
     <nav>
         <a class="nav-logo" href="index.html">Outfit</a>
         <ul class="nav-links">
-            <li><a href="index.html">Closet</a></li>
+            <li><a href="closet.html">Closet</a></li>
             <li><a href="upload.html">Subir prenda</a></li>
             <li><a href="generate.html" aria-current="page">Generar outfit</a></li>
             <li><a href="history.html">Historial</a></li>
@@ -28,13 +28,19 @@
         <!-- Selector de ocasión -->
         <div class="campo">
             <label for="selector-ocasion">¿Para qué ocasión?</label>
-            <select id="selector-ocasion" class="campo-select">
-                <option value="trabajo">Trabajo</option>
-                <option value="casual">Casual</option>
-                <option value="cita">Cita</option>
-                <option value="deporte">Deporte</option>
-                <option value="evento-formal">Evento Formal</option>
-            </select>
+            <div class="custom-select" id="selector-ocasion" data-name="ocasion" aria-label="Ocasión">
+                <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Ocasión">
+                    <span class="custom-select-value">Trabajo</span>
+                    <i data-lucide="chevron-down" class="custom-select-arrow"></i>
+                </button>
+                <div class="custom-select-panel" role="listbox" aria-label="Ocasiones" hidden>
+                    <div class="custom-select-option" data-value="trabajo" role="option" aria-selected="true">Trabajo</div>
+                    <div class="custom-select-option" data-value="casual" role="option">Casual</div>
+                    <div class="custom-select-option" data-value="cita" role="option">Cita</div>
+                    <div class="custom-select-option" data-value="deporte" role="option">Deporte</div>
+                    <div class="custom-select-option" data-value="evento-formal" role="option">Evento Formal</div>
+                </div>
+            </div>
         </div>
 
         <button id="btn-generar" class="btn-primario">

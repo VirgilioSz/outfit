@@ -42,6 +42,19 @@ def crear_prenda(db: Session, imagen: UploadFile, tipo: str,
 def obtener_prendas(db: Session) -> list:
     return db.query(Clothing).all()
 
+def obtener_prendas_filtradas(db: Session, tipo: str = None, color: str = None, 
+                              estilo: str = None, temporada: str = None) -> list:
+    query = db.query(Clothing)
+    if tipo and tipo != "todos":
+        query = query.filter(Clothing.tipo == tipo)
+    if color and color != "todos":
+        query = query.filter(Clothing.color == color)
+    if estilo and estilo != "todos":
+        query = query.filter(Clothing.estilo == estilo)
+    if temporada and temporada != "todos":
+        query = query.filter(Clothing.temporada == temporada)
+    return query.all()
+
 def obtener_prenda_por_id(db: Session, prenda_id: int) -> Clothing:
     prenda = db.query(Clothing).filter(Clothing.id == prenda_id).first()
     if not prenda:
@@ -76,3 +89,29 @@ def actualizar_prenda(db: Session, prenda_id: int, tipo: str = None,
     db.commit()
     db.refresh(prenda)
     return prenda
+
+
+def obtener_opciones_filtros(db: Session) -> dict:
+    """Obtiene valores únicos existentes en la BD para cada campo de filtro"""
+    # Obtener todos los valores únicos de cada campo
+    tipos = db.query(Clothing.tipo).distinct().all()
+    colores = db.query(Clothing.color).distinct().all()
+    estilos = db.query(Clothing.estilo).distinct().all()
+    temporadas = db.query(Clothing.temporada).distinct().all()
+    
+    # Convertir a listas ordenadas
+    tipos_lista = sorted([t[0] for t in tipos if t[0]])
+    colores_lista = sorted([c[0] for c in colores if c[0]])
+    estilos_lista = sorted([e[0] for e in estilos if e[0]])
+    temporadas_lista = sorted([t[0] for t in temporadas if t[0]])
+    
+    # Orden personalizado para temporadas
+    orden_temporadas = ["todas", "primavera", "verano", "otoño", "invierno"]
+    temporadas_lista = sorted(temporadas_lista, key=lambda x: orden_temporadas.index(x) if x in orden_temporadas else 999)
+    
+    return {
+        "tipos": tipos_lista,
+        "colores": colores_lista,
+        "estilos": estilos_lista,
+        "temporadas": temporadas_lista
+    }

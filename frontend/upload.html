@@ -8,14 +8,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 
 <body>
     <nav>
         <a class="nav-logo" href="index.html">Outfit</a>
         <ul class="nav-links">
-            <li><a href="index.html">Closet</a></li>
+            <li><a href="closet.html">Closet</a></li>
             <li><a href="upload.html" aria-current="page">Subir prenda</a></li>
             <li><a href="generate.html">Generar outfit</a></li>
             <li><a href="history.html">Historial</a></li>
@@ -33,7 +33,12 @@
             <!-- Imagen -->
             <div class="campo">
                 <label for="input-imagen">Foto de la prenda</label>
-                <input type="file" id="input-imagen" accept=".jpg,.jpeg,.png,.webp" required>
+                <div class="file-upload-wrapper">
+                    <input type="file" id="input-imagen" accept=".jpg,.jpeg,.png,.webp" required hidden>
+                    <label for="input-imagen" class="btn-primario file-upload-label">
+                        <i data-lucide="upload"></i> Seleccionar imagen
+                    </label>
+                </div>
                 <img id="preview" style="display:none; margin-top: var(--espaciado-sm);
                      max-width: 200px; border-radius: var(--radio-borde);" alt="Preview">
             </div>
@@ -59,13 +64,19 @@
             <!-- Temporada -->
             <div class="campo">
                 <label for="input-temporada">Temporada</label>
-                <select id="input-temporada">
-                    <option value="todas">Todas</option>
-                    <option value="primavera">Primavera</option>
-                    <option value="verano">Verano</option>
-                    <option value="otoño">Otoño</option>
-                    <option value="invierno">Invierno</option>
-                </select>
+                <div class="custom-select" id="input-temporada" data-name="temporada" aria-label="Temporada">
+                    <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Temporada">
+                        <span class="custom-select-value">Todas</span>
+                        <i data-lucide="chevron-down" class="custom-select-arrow"></i>
+                    </button>
+                    <div class="custom-select-panel" role="listbox" aria-label="Temporadas" hidden>
+                        <div class="custom-select-option" data-value="todas" role="option" aria-selected="true">Todas</div>
+                        <div class="custom-select-option" data-value="primavera" role="option">Primavera</div>
+                        <div class="custom-select-option" data-value="verano" role="option">Verano</div>
+                        <div class="custom-select-option" data-value="otoño" role="option">Otoño</div>
+                        <div class="custom-select-option" data-value="invierno" role="option">Invierno</div>
+                    </div>
+                </div>
             </div>
 
             <!-- Notas -->

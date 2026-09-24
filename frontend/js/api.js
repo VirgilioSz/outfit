@@ -17,9 +17,22 @@ async function apiRequest(endpoint, options = {}) {
     return res.json();
 }
 
-// ── Prendas ────────────────────────────────────────────────────
-async function getPrendas() {
-    return apiRequest(`/clothes/`, { method: "GET" });
+async function getPrendas(filtros = {}) {
+    const params = new URLSearchParams();
+    if (filtros.tipo && filtros.tipo !== "todos") params.append("tipo", filtros.tipo);
+    if (filtros.color && filtros.color !== "todos") params.append("color", filtros.color);
+    if (filtros.estilo && filtros.estilo !== "todos") params.append("estilo", filtros.estilo);
+    if (filtros.temporada && filtros.temporada !== "todos") params.append("temporada", filtros.temporada);
+    
+    const queryString = params.toString();
+    const endpoint = `/clothes/${queryString ? `?${queryString}` : ''}`;
+    console.log('API call:', `${API_URL}${endpoint}`);
+    return apiRequest(endpoint, { method: "GET" });
+}
+
+async function getOpcionesFiltros() {
+    console.log('Fetching filter options from:', `${API_URL}/clothes/filtros/opciones`);
+    return apiRequest(`/clothes/filtros/opciones`, { method: "GET" });
 }
 
 async function uploadPrenda(formData) {
