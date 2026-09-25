@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none" stroke="#007ACC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Sparkles / AI Magic Wand -->
+  <rect x="14" y="14" width="52" height="52" rx="10" stroke="#2A2A2A" fill="#141414"/>
+  <!-- Magic Wand -->
+  <line x1="26" y1="54" x2="48" y2="32" stroke="#007ACC" stroke-width="2.5"/>
+  <path d="M48 32 L51 29 L54 32 L51 35 Z" fill="#007ACC" stroke="#007ACC"/>
+  <!-- AI Sparkles -->
+  <path d="M34 24 L36 20 L38 24 L42 26 L38 28 L36 32 L34 28 L30 26 Z" fill="rgba(0,122,204,0.3)" stroke="#007ACC"/>
+  <circle cx="54" cy="46" r="1.5" fill="#007ACC"/>
+  <circle cx="24" cy="34" r="1.5" fill="#007ACC"/>
+</svg>

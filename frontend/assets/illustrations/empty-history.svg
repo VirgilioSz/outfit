@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none" stroke="#007ACC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Clock / History Dial -->
+  <circle cx="40" cy="40" r="26" stroke="#2A2A2A" fill="#141414"/>
+  <circle cx="40" cy="40" r="20" stroke="rgba(0,122,204,0.2)"/>
+  <!-- Clock Hands -->
+  <polyline points="40,26 40,40 50,44" stroke="#007ACC"/>
+  <!-- Back in time counter-clockwise arrow -->
+  <path d="M22 28 C26 21 33 16 40 16 C53 16 64 27 64 40" stroke="#007ACC" stroke-dasharray="3 3"/>
+  <polyline points="18,25 22,29 27,25" stroke="#007ACC"/>
+  <circle cx="40" cy="40" r="2.5" fill="#007ACC"/>
+</svg>
