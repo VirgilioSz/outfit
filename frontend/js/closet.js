@@ -341,6 +341,8 @@ function abrirLightbox(prenda) {
     UI.abrirPanel("#lightbox-prenda", ".lightbox-panel", () => {
         limpiarFocusTrap = UI.atraparFoco("#lightbox-prenda");
         document.getElementById("lightbox-cerrar").focus();
+        // Inicializar iconos de Lucide después de abrir el lightbox
+        inicializarIconos();
     });
 }
 
@@ -445,6 +447,9 @@ function restaurarVistaLectura() {
     eliminarBtn.onclick = confirmarEliminar;
     eliminarBtn.style.display = "inline-flex";
     cancelarBtn.style.display = "none";
+    
+    // Re-inicializar iconos de Lucide después de restaurar el HTML
+    inicializarIconos();
 }
 
 async function guardarEdicion() {

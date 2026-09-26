@@ -106,6 +106,10 @@ async function abrirLightboxOutfit(id) {
         UI.abrirPanel("#lightbox-outfit", ".lightbox-panel", () => {
             limpiarFocusTrapOutfit = UI.atraparFoco("#lightbox-outfit");
             document.getElementById("lightbox-outfit-cerrar").focus();
+            // Inicializar iconos de Lucide después de abrir el lightbox
+            if (typeof lucide !== "undefined") {
+                lucide.createIcons();
+            }
         });
     } catch (error) {
         console.error("Error al cargar detalle del outfit:", error);
