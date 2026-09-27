@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none" stroke="#007ACC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Upload Dashed Box / Card -->
+  <rect x="14" y="16" width="52" height="48" rx="8" stroke="#2A2A2A" stroke-dasharray="4 4" fill="#141414"/>
+  <!-- Cloud / Arrow Up -->
+  <path d="M28 44 C25 44 23 41 24 38 C25 35 28 34 30 34 C31 30 35 27 40 27 C46 27 50 31 50 36 C54 36 57 39 56 43 C55 46 52 47 49 47" stroke="#333333"/>
+  <!-- Up Arrow -->
+  <line x1="40" y1="56" x2="40" y2="38" stroke="#007ACC" stroke-width="2.5"/>
+  <polyline points="33,45 40,38 47,45" stroke="#007ACC" stroke-width="2.5"/>
+  <!-- Glow dots -->
+  <circle cx="24" cy="24" r="1.5" fill="#007ACC"/>
+  <circle cx="56" cy="24" r="1.5" fill="#007ACC"/>
+</svg>
