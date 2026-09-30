@@ -46,7 +46,18 @@ def generar_outfit_endpoint(request: GenerarOutfitRequest, db: Session = Depends
 # ── GET /history ───────────────────────────────────────────────
 @router.get("/history")
 def obtener_historial(db: Session = Depends(get_db)):
-    return db.query(OutfitHistory).order_by(OutfitHistory.created_at.desc()).all()
+    outfits = db.query(OutfitHistory).order_by(OutfitHistory.created_at.desc()).all()
+    resultado = []
+    for outfit in outfits:
+        prendas = db.query(Clothing).filter(Clothing.id.in_(outfit.prendas_ids)).all()
+        resultado.append({
+            "id": outfit.id,
+            "ocasion": outfit.ocasion,
+            "descripcion": outfit.descripcion,
+            "created_at": outfit.created_at,
+            "prendas": prendas
+        })
+    return resultado
 
 # ── DELETE /history/{id} ───────────────────────────────────────
 @router.delete("/history/{outfit_id}")
