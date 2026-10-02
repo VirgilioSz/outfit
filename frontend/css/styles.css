@@ -380,6 +380,10 @@ h1 {
     font-weight: 500;
     transition: color 0.3s ease;
     isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espaciado-sm);
 }
 
 .btn-peligro::before {
