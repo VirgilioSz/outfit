@@ -29,6 +29,9 @@ ALLOWED_EXTENSIONS = {"jpg", "jpeg", "png", "webp"}
 # ── CORS (qué orígenes pueden llamar a la API) ────────────────────────────────
 CORS_ORIGINS = os.getenv("CORS_ORIGINS", "").split(",")
 
+# ── OPENWEATHER ────────────────────────────────
+OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY", "")
+
 
 # ── Validación al arrancar ────────────────────────────────────────────────────
 def validate_config():

@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import create_tables
 from config import CORS_ORIGINS, validate_config
-from routers import clothes, outfits
+from routers import clothes, outfits, weather
 from fastapi.staticfiles import StaticFiles
 from services.image_service import obtener_carpeta_uploads
 
@@ -30,6 +30,7 @@ async def health_status():
 # 5. Aquí irán los routers cuando los crees, así:
 app.include_router(clothes.router, prefix="/clothes", tags=["clothes"])
 app.include_router(outfits.router, prefix="/outfits", tags=["outfits"])
+app.include_router(weather.router, prefix="/weather", tags=["weather"])
 
 carpeta_uploads = obtener_carpeta_uploads()
 carpeta_uploads.mkdir(parents=True, exist_ok=True)
