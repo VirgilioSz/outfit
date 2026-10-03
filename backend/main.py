@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from services.image_service import obtener_carpeta_uploads
 
 # 1. Crea la instancia de FastAPI
-app = FastAPI(title="Outfit", version="1.0")
+app = FastAPI(title="Outfit", version="1.1")
 
 # 2. Valida la configuración y crea las tablas de la base de datos al arrancar el servidor
 validate_config()
