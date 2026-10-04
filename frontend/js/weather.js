@@ -75,48 +75,30 @@ const Weather = (function () {
         setIcon('weather-icon-main', 'alert-circle');
     }
 
-    async function fetchWeather(cityName) {
-        try {
-            const url = `${BASE_URL}?q=${encodeURIComponent(cityName)}&appid=${API_KEY}&units=metric&lang=es`;
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                if (response.status === 401) {
-                    throw new Error('API key inválida');
-                }
-                if (response.status === 404) {
-                    throw new Error('Ciudad no encontrada');
-                }
-                throw new Error(`Error ${response.status}`);
-            }
-
-            const data = await response.json();
-            return {
-                temp: Math.round(data.main.temp),
-                feels_like: Math.round(data.main.feels_like),
-                humidity: data.main.humidity,
-                description: data.weather[0].description,
-                main: data.weather[0].main,
-                city: data.name,
-                country: data.sys.country,
-            };
-        } catch (error) {
-            console.error('Weather fetch error:', error);
-            throw error;
-        }
+async function fetchWeather() {
+        const data = await apiRequest("/weather");
+        return {
+            temp: Math.round(data.main.temp),
+            feels_like: Math.round(data.main.feels_like),
+            humidity: data.main.humidity,
+            description: data.weather[0].description,
+            main: data.weather[0].main,
+            city: data.name,
+            country: data.sys.country,
+            wind_speed: data.wind.speed,
+            wind_deg: data.wind.deg,
+        };
     }
 
     async function loadWeather() {
-        try {
-            const data = await fetchWeather(CITY);
-            if (data) {
-                updateDisplay(data);
-            }
-        } catch (error) {
-            console.error('Weather fetch error:', error);
-            showError(error.message);
-        }
+    try {
+        const data = await fetchWeather();
+        if (data) updateDisplay(data);
+    } catch (error) {
+        console.error("Weather error:", error);
+        showError(error.message);
     }
+}
 
     function updateDisplay(data) {
         tempEl.textContent = `${data.temp}°`;
