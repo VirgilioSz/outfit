@@ -39,9 +39,11 @@ function renderHistorial(outfits) {
                     </div>
                 `).join("")}
             </div>
-            <button class="btn-peligro" onclick="eliminarOutfitDirecto(${outfit.id})" style="margin-top: var(--espaciado-md);">
-                <span>Eliminar outfit</span>
-            </button>
+            <div style="display: flex; justify-content: center; margin-top: var(--espaciado-md);">
+                <button class="btn-peligro" onclick="eliminarOutfitDirecto(${outfit.id})">
+                    <span>Eliminar outfit</span>
+                </button>
+            </div>
         `;
         lista.appendChild(div);
     });

@@ -121,6 +121,9 @@ ALLOWED_EXTENSIONS=jpg,jpeg,png,webp
 
 # CORS
 CORS_ORIGINS=http://localhost:5500,http://127.0.0.1:5500
+
+# OPENWEATHER
+OPENWEATHER_API_KEY=tu-openweather-api-key
 ```
 
 > **Nota:** Obtén tu `GEMINI_API_KEY` en [Google AI Studio](https://makersuite.google.com/app/apikey)
