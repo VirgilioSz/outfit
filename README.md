@@ -176,6 +176,12 @@ Frontend disponible en: http://localhost:5500
 
 ---
 
+## Features extras
+
+### - Widget para ver el clima
+
+---
+
 ## API Endpoints
 
 ### Prendas
